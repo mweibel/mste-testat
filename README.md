@@ -1,4 +1,6 @@
 mste-testat
 ===========
 
-Miniproject for passing Microsoft Technologies - A car reservation system
+Miniproject for passing the module Microsoft Technologies @ HSR - A car reservation system
+
+Not intended for production use.
