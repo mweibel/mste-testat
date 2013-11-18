@@ -108,5 +108,5 @@ Backup*/
 UpgradeLog*.XML
 
 
-*.mdf
-*.ldf
+#*.mdf
+#*.ldf
