@@ -10,8 +10,8 @@
         <EntityTypeShape EntityType="arsystem.Reservation" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="arsystem.FK_Reservation_Auto" ManuallyRouted="false" />
         <AssociationConnector Association="arsystem.FK_Reservation_Kunde" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="arsystem.LuxusKlasseAuto" Width="1.5" PointX="0.875" PointY="7.75" />
-        <InheritanceConnector EntityType="arsystem.LuxusKlasseAuto" />
+        <EntityTypeShape EntityType="arsystem.LuxusklasseAuto" Width="1.5" PointX="0.875" PointY="7.75" />
+        <InheritanceConnector EntityType="arsystem.LuxusklasseAuto" />
         <EntityTypeShape EntityType="arsystem.MittelklasseAuto" Width="1.5" PointX="3" PointY="7.75" />
         <InheritanceConnector EntityType="arsystem.MittelklasseAuto" />
         <EntityTypeShape EntityType="arsystem.StandardAuto" Width="1.5" PointX="5.25" PointY="7.75" />

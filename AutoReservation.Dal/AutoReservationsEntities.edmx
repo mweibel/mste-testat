@@ -153,7 +153,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="LuxusKlasseAuto" BaseType="arsystem.Auto" >
+        <EntityType Name="LuxusklasseAuto" BaseType="arsystem.Auto" >
           <Property Type="String" Name="Basistarif" Nullable="false" />
         </EntityType>
         <EntityType Name="MittelklasseAuto" BaseType="arsystem.Auto" />
