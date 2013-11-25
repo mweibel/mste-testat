@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c2c9fe08ae204b6e815bc2c00e3443c2" Name="AutoReservationDiagramm">
+        <EntityTypeShape EntityType="AutoReservationEntitiesModel.Auto" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AutoReservationEntitiesModel.Kunde" Width="1.5" PointX="6.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AutoReservationEntitiesModel.Reservation" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="AutoReservationEntitiesModel.FK_Reservation_Auto" ManuallyRouted="false" />
+        <AssociationConnector Association="AutoReservationEntitiesModel.FK_Reservation_Kunde" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AutoReservationEntitiesModel.LuxusklasseAuto" Width="1.5" PointX="1.5" PointY="7" />
+        <InheritanceConnector EntityType="AutoReservationEntitiesModel.LuxusklasseAuto" />
+        <EntityTypeShape EntityType="AutoReservationEntitiesModel.MittelklasseAuto" Width="1.5" PointX="3.375" PointY="7" />
+        <InheritanceConnector EntityType="AutoReservationEntitiesModel.MittelklasseAuto" />
+        <EntityTypeShape EntityType="AutoReservationEntitiesModel.StandardAuto" Width="1.5" PointX="5.375" PointY="7" />
+        <InheritanceConnector EntityType="AutoReservationEntitiesModel.StandardAuto" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

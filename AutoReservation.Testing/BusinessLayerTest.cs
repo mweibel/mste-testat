@@ -2,12 +2,26 @@
 using AutoReservation.BusinessLayer;
 using AutoReservation.Dal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using AutoReservation.Common.DataTransferObjects;
 
 namespace AutoReservation.Testing
 {
     [TestClass]
     public class BusinessLayerTest
     {
+        private AutoReservationEntities context;
+        private AutoReservationEntities Context
+        {
+            get
+            {
+                if (context == null)
+                {
+                    context = new AutoReservationEntities();
+                }
+                return context;
+            }
+        }
+
         private AutoReservationBusinessComponent target;
         private AutoReservationBusinessComponent Target
         {
@@ -26,6 +40,15 @@ namespace AutoReservation.Testing
         public void InitializeTestData()
         {
             TestEnvironmentHelper.InitializeTestData();
+        }
+
+        [TestMethod]
+        public void InsertAutoTest()
+        {
+            Auto auto = new Auto();
+            auto.Marke = "BMW";
+
+            target.insertAuto(context, auto); 
         }
 
         [TestMethod]

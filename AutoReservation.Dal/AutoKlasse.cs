@@ -10,20 +10,11 @@
 namespace AutoReservation.Dal
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Kunde
+    public enum AutoKlasse : int
     {
-        public Kunde()
-        {
-            this.Reservations = new HashSet<Reservation>();
-        }
-    
-        public int Id { get; set; }
-        public string Nachname { get; set; }
-        public string Vorname { get; set; }
-        public System.DateTime Geburtsdatum { get; set; }
-    
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        LuxusklasseAuto = 0,
+        MittelklasseAuto = 1,
+        StandardAuto = 2
     }
 }

@@ -8,7 +8,17 @@ namespace AutoReservation.BusinessLayer
 {
     public class AutoReservationBusinessComponent
     {
+        #region Insert
+        public Auto insertAuto(AutoReservationEntities context, Auto auto) 
+        {
+            return insert<Auto>(context.Autos, auto);
+        }
 
+        private T insert<T>(DbSet<T> dbSet, T entry) where T : class
+        {
+            return dbSet.Add(entry);
+        }
+        #endregion Insert
 
         private static void HandleDbConcurrencyException<T>(AutoReservationEntities context, T original) where T : class
         {
