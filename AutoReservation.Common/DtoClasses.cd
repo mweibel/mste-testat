@@ -6,6 +6,9 @@
       <HashCode>AAICAAASAACAEAAFBAAAAQQAAAAAAAAAAAAAAAAAAhA=</HashCode>
       <FileName>DataTransferObjects\AutoDto.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="autoKlasse" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="AutoReservation.Common.DataTransferObjects.DtoBase" Collapsed="true">
     <Position X="3" Y="2.25" Width="1.5" />
