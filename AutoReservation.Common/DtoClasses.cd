@@ -7,7 +7,7 @@
       <FileName>DataTransferObjects\AutoDto.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="autoKlasse" />
+      <Property Name="AutoKlasse" />
     </ShowAsAssociation>
   </Class>
   <Class Name="AutoReservation.Common.DataTransferObjects.DtoBase" Collapsed="true">
