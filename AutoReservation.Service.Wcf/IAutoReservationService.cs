@@ -9,14 +9,14 @@ namespace AutoReservation.Service.Wcf
 {
     interface IAutoReservationService
     {
-        public List<DtoBase> findAll();
+        List<DtoBase> findAll();
 
-        public DtoBase findOne(int id);
+        DtoBase findOne(int id);
 
-        public DtoBase insert(DtoBase entry);
+        DtoBase insert(DtoBase entry);
 
-        public DtoBase update(DtoBase entry);
+        DtoBase update(DtoBase entry);
 
-        public bool delete(DtoBase entry);
+        bool delete(DtoBase entry);
     }
 }

@@ -11,9 +11,9 @@ namespace AutoReservation.Service.Wcf
         #region Auto
         private static Auto GetAutoInstance(AutoDto dto)
         {
-            if (dto.AutoKlasse == AutoKlasse.Standard) { return new StandardAuto(); }
-            if (dto.AutoKlasse == AutoKlasse.Mittelklasse) { return new MittelklasseAuto(); }
-            if (dto.AutoKlasse == AutoKlasse.Luxusklasse) { return new LuxusklasseAuto(); }
+            if (dto.AutoKlasse == AutoReservation.Common.DataTransferObjects.AutoKlasse.Standard) { return new StandardAuto(); }
+            if (dto.AutoKlasse == AutoReservation.Common.DataTransferObjects.AutoKlasse.Mittelklasse) { return new MittelklasseAuto(); }
+            if (dto.AutoKlasse == AutoReservation.Common.DataTransferObjects.AutoKlasse.Luxusklasse) { return new LuxusklasseAuto(); }
             throw new NotImplementedException("Unknown AutoDto implementation.");
         }
         public static Auto ConvertToEntity(this AutoDto dto)
@@ -42,11 +42,11 @@ namespace AutoReservation.Service.Wcf
                 Tagestarif = auto.Tagestarif,
             };
 
-            if (auto is StandardAuto) { dto.AutoKlasse = AutoKlasse.Standard; }
-            if (auto is MittelklasseAuto) { dto.AutoKlasse = AutoKlasse.Mittelklasse; }
+            if (auto is StandardAuto) { dto.AutoKlasse = AutoReservation.Common.DataTransferObjects.AutoKlasse.Standard; }
+            if (auto is MittelklasseAuto) { dto.AutoKlasse = AutoReservation.Common.DataTransferObjects.AutoKlasse.Mittelklasse; }
             if (auto is LuxusklasseAuto)
             {
-                dto.AutoKlasse = AutoKlasse.Luxusklasse;
+                dto.AutoKlasse = AutoReservation.Common.DataTransferObjects.AutoKlasse.Luxusklasse;
                 dto.Basistarif = ((LuxusklasseAuto)auto).Basistarif;
             }
 

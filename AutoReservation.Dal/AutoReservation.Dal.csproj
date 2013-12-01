@@ -79,31 +79,34 @@
       <DependentUpon>arsystem.xsd</DependentUpon>
     </Compile>
     <Compile Include="Auto.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+      <DependentUpon>AutoReservationEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoKlasse.cs">
+      <DependentUpon>AutoReservationEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoReservationEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AutoReservationEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoReservationEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AutoReservationEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoReservationEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AutoReservationEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Kunde.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+      <DependentUpon>AutoReservationEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="LuxusKlasseAuto.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+    <Compile Include="LuxusklasseAuto.cs">
+      <DependentUpon>AutoReservationEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="MittelklasseAuto.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model2.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model2.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model2.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoReservationsEntities.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AutoReservationsEntities.edmx</DependentUpon>
+      <DependentUpon>AutoReservationEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -111,16 +114,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Reservation.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+      <DependentUpon>AutoReservationEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="StandardAuto.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
+      <DependentUpon>AutoReservationEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -136,22 +134,22 @@
     <None Include="arsystem.xss">
       <DependentUpon>arsystem.xsd</DependentUpon>
     </None>
-    <EntityDeploy Include="AutoReservationsEntities.edmx">
+    <EntityDeploy Include="AutoReservationEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AutoReservationsEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>AutoReservationEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model2.Context.tt">
+    <None Include="AutoReservationEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AutoReservationsEntities.edmx</DependentUpon>
-      <LastGenOutput>Model2.Context.cs</LastGenOutput>
+      <DependentUpon>AutoReservationEntities.edmx</DependentUpon>
+      <LastGenOutput>AutoReservationEntities.Context.cs</LastGenOutput>
     </None>
-    <None Include="AutoReservationsEntities.edmx.diagram">
-      <DependentUpon>AutoReservationsEntities.edmx</DependentUpon>
+    <None Include="AutoReservationEntities.edmx.diagram">
+      <DependentUpon>AutoReservationEntities.edmx</DependentUpon>
     </None>
-    <None Include="Model2.tt">
+    <None Include="AutoReservationEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AutoReservationsEntities.edmx</DependentUpon>
-      <LastGenOutput>Model2.cs</LastGenOutput>
+      <DependentUpon>AutoReservationEntities.edmx</DependentUpon>
+      <LastGenOutput>AutoReservationEntities.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

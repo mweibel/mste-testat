@@ -45,10 +45,13 @@ namespace AutoReservation.Testing
         [TestMethod]
         public void InsertAutoTest()
         {
-            Auto auto = new Auto();
+            Auto auto = new StandardAuto();
             auto.Marke = "BMW";
+            auto.Tagestarif = 400;
 
-            target.insertAuto(context, auto); 
+            Auto insertedAuto = target.insertAuto(context, auto);
+
+            Assert.IsNotNull(insertedAuto.Id);
         }
 
         [TestMethod]
