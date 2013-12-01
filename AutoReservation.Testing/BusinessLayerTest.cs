@@ -49,7 +49,7 @@ namespace AutoReservation.Testing
             auto.Marke = "BMW";
             auto.Tagestarif = 400;
 
-            Auto insertedAuto = target.insertAuto(context, auto);
+            Auto insertedAuto = target.InsertAuto(auto);
 
             Assert.IsNotNull(insertedAuto.Id);
         }

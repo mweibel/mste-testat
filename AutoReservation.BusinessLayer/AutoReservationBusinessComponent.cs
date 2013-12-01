@@ -8,13 +8,45 @@ namespace AutoReservation.BusinessLayer
 {
     public class AutoReservationBusinessComponent
     {
-        #region Insert
-        public Auto insertAuto(AutoReservationEntities context, Auto auto) 
+        #region Find
+
+        #endregion Find
+
+        #region Update
+        public Auto UpdateAuto(Auto original, Auto modified)
         {
-            return insert<Auto>(context.Autos, auto);
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return Update<Auto>(context, context.Autos, original, modified);
+            }
         }
 
-        private T insert<T>(DbSet<T> dbSet, T entry) where T : class
+        private T Update<T>(AutoReservationEntities context, DbSet<T> dbSet, T original, T modified) where T : class
+        {
+            try
+            {
+                dbSet.Attach(original);
+                context.Entry(original).CurrentValues.SetValues(modified);
+                context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                HandleDbConcurrencyException(context, original);
+            }
+            return modified;
+        }
+        #endregion Update
+
+        #region Insert
+        public Auto InsertAuto(Auto auto) 
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return Insert<Auto>(context, context.Autos, auto);
+            }
+        }
+
+        private T Insert<T>(AutoReservationEntities context, DbSet<T> dbSet, T entry) where T : class
         {
             return dbSet.Add(entry);
         }
