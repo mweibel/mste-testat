@@ -4,6 +4,7 @@ using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AutoReservation.Common.Interfaces;
+using AutoReservation.Service.Wcf;
 
 namespace AutoReservation.Testing
 {

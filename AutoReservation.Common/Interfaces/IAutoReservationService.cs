@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoReservation.Service.Wcf
+namespace AutoReservation.Common.Interfaces
 {
-    interface IAutoReservationService
+    public interface IAutoReservationService
     {
         List<DtoBase> findAll();
 

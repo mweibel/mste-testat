@@ -2,6 +2,7 @@
 using AutoReservation.Common.Interfaces;
 using AutoReservation.Service.Wcf.Host;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using AutoReservation.Service.Wcf;
 
 namespace AutoReservation.Testing
 {

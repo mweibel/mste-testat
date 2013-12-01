@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.Ui.Factory;
 using System.Windows;
+using AutoReservation.Service.Wcf;
 
 namespace AutoReservation.Ui.ViewModels
 {

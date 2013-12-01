@@ -1,13 +1,36 @@
-﻿using System;
+﻿using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace AutoReservation.Service.Wcf
 {
-    public class AutoReservationService
+    public class AutoReservationService: IAutoReservationService
     {
-        private static void WriteActualMethod()
+        public List<DtoBase> findAll() 
         {
-            Console.WriteLine("Calling: " + new StackTrace().GetFrame(1).GetMethod().Name);
+            return new List<DtoBase> { };
+        }
+
+        public DtoBase findOne(int id)
+        {
+            return null;
+        }
+
+        public DtoBase insert(DtoBase entry)
+        {
+            return null;
+        }
+
+        public DtoBase update(DtoBase entry)
+        {
+            return null;
+        }
+
+        public bool delete(DtoBase entry)
+        {
+            return false;
         }
     }
 }
