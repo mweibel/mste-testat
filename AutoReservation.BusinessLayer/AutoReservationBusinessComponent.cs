@@ -76,7 +76,7 @@ namespace AutoReservation.BusinessLayer
         #endregion Insert
 
         #region Delete
-        private Auto DeleteAuto(Auto entry)
+        public Auto DeleteAuto(Auto entry)
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
