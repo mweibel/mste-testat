@@ -22,115 +22,117 @@ namespace AutoReservation.Testing
         [TestMethod]
         public void AutosTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            List<AutoDto> autos = Target.FindAllAutos();
+
+            Assert.IsTrue(autos.Count == 3, "Invalid amount of autos");
         }
 
-        [TestMethod]
-        public void KundenTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void KundenTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void ReservationenTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void ReservationenTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void GetAutoByIdTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void GetAutoByIdTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void GetKundeByIdTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void GetKundeByIdTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void GetReservationByNrTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void GetReservationByNrTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void GetReservationByIllegalNr()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void GetReservationByIllegalNr()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void InsertAutoTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void InsertAutoTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void InsertKundeTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void InsertKundeTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void InsertReservationTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void InsertReservationTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void UpdateAutoTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void UpdateAutoTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void UpdateKundeTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void UpdateKundeTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void UpdateReservationTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void UpdateReservationTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void UpdateAutoTestWithOptimisticConcurrency()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void UpdateAutoTestWithOptimisticConcurrency()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void UpdateKundeTestWithOptimisticConcurrency()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void UpdateKundeTestWithOptimisticConcurrency()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void UpdateReservationTestWithOptimisticConcurrency()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void UpdateReservationTestWithOptimisticConcurrency()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void DeleteKundeTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void DeleteKundeTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void DeleteAutoTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void DeleteAutoTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
 
-        [TestMethod]
-        public void DeleteReservationTest()
-        {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+        //[TestMethod]
+        //public void DeleteReservationTest()
+        //{
+        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
+        //}
     }
 }
