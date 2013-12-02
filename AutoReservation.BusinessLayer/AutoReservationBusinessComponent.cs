@@ -9,12 +9,31 @@ namespace AutoReservation.BusinessLayer
     public class AutoReservationBusinessComponent
     {
         #region FindAll
-        public DbSet<Auto> FindAllAutos()
+        public List<Auto> FindAllAutos()
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
-                return context.Set<Auto>();
+                return FindAll<Auto>(context.Set<Auto>());
             }
+        }
+        public List<Kunde> FindAllKunden()
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return FindAll<Kunde>(context.Set<Kunde>());
+            }
+        }
+        public List<Reservation> FindAllReservationen()
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return FindAll<Reservation>(context.Set<Reservation>());
+            }
+        }
+
+        public List<T> FindAll<T>(DbSet<T> entries) where T : class
+        {
+            return new List<T>(entries);
         }
         #endregion FindAll
 
@@ -24,6 +43,20 @@ namespace AutoReservation.BusinessLayer
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
                 return Find<Auto>(context, context.Autos, id);
+            }
+        }
+        public Kunde FindKunde(int id)
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return Find<Kunde>(context, context.Kunden, id);
+            }
+        }
+        public Reservation FindReservation(int id)
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return Find<Reservation>(context, context.Reservationen, id);
             }
         }
 
@@ -39,6 +72,20 @@ namespace AutoReservation.BusinessLayer
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
                 return Update<Auto>(context, context.Autos, original, modified);
+            }
+        }
+        public Kunde UpdateKunde(Kunde original, Kunde modified)
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return Update<Kunde>(context, context.Kunden, original, modified);
+            }
+        }
+        public Reservation UpdateReservation(Reservation original, Reservation modified)
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return Update<Reservation>(context, context.Reservationen, original, modified);
             }
         }
 
@@ -68,6 +115,20 @@ namespace AutoReservation.BusinessLayer
                 return Insert<Auto>(context, context.Autos, auto);
             }
         }
+        public Kunde InsertKunde(Kunde auto)
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return Insert<Kunde>(context, context.Kunden, auto);
+            }
+        }
+        public Reservation InsertReservation(Reservation auto)
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return Insert<Reservation>(context, context.Reservationen, auto);
+            }
+        }
 
         private T Insert<T>(AutoReservationEntities context, DbSet<T> dbSet, T entry) where T : class
         {
@@ -81,6 +142,20 @@ namespace AutoReservation.BusinessLayer
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
                 return Delete<Auto>(context, context.Autos, entry);
+            }
+        }
+        public Kunde DeleteKunde(Kunde entry)
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return Delete<Kunde>(context, context.Kunden, entry);
+            }
+        }
+        public Reservation DeleteReservation(Reservation entry)
+        {
+            using (AutoReservationEntities context = new AutoReservationEntities())
+            {
+                return Delete<Reservation>(context, context.Reservationen, entry);
             }
         }
 
