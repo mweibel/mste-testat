@@ -17,12 +17,14 @@ namespace AutoReservation.Common.Interfaces
         List<AutoDto> FindAllAutos();
 
         [OperationContract]
+        [FaultContract(typeof(NotFoundException))]
         AutoDto FindAuto(int id);
 
         [OperationContract]
         AutoDto InsertAuto(AutoDto auto);
 
         [OperationContract]
+        [FaultContract(typeof(ConcurrencyException))]
         AutoDto UpdateAuto(AutoDto original, AutoDto modified);
 
         [OperationContract]
@@ -36,12 +38,14 @@ namespace AutoReservation.Common.Interfaces
         List<KundeDto> FindAllKunden();
 
         [OperationContract]
+        [FaultContract(typeof(NotFoundException))]
         KundeDto FindKunde(int id);
 
         [OperationContract]
         KundeDto InsertKunde(KundeDto kunde);
 
         [OperationContract]
+        [FaultContract(typeof(ConcurrencyException))]
         KundeDto UpdateKunde(KundeDto original, KundeDto modified);
 
         [OperationContract]
@@ -62,6 +66,7 @@ namespace AutoReservation.Common.Interfaces
         ReservationDto InsertReservation(ReservationDto reservation);
 
         [OperationContract]
+        [FaultContract(typeof(ConcurrencyException))]
         ReservationDto UpdateReservation(ReservationDto original, ReservationDto modified);
 
         [OperationContract]

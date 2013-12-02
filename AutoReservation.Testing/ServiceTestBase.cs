@@ -20,6 +20,7 @@ namespace AutoReservation.Testing
             TestEnvironmentHelper.InitializeTestData();
         }
 
+        #region FindAll
         [TestMethod]
         public void AutosTest()
         {
@@ -43,7 +44,9 @@ namespace AutoReservation.Testing
 
             Assert.IsTrue(reservationen.Count == 3, "Invalid amount of reservationen");
         }
+        #endregion FindAll
 
+        #region FindById
         [TestMethod]
         public void GetAutoByIdTest()
         {
@@ -78,7 +81,9 @@ namespace AutoReservation.Testing
             // FIXME: FaultException Expecting doesn't work
             ReservationDto reservation = Target.FindReservation(48539);
         }
+        #endregion FindById
 
+        #region Insert
         [TestMethod]
         public void InsertAutoTest()
         {
@@ -148,7 +153,9 @@ namespace AutoReservation.Testing
             Assert.AreEqual(reservation.Bis, savedReservation.Bis);
             Assert.AreEqual(reservation.Von, savedReservation.Von);
         }
+        #endregion Insert
 
+        #region Update
         [TestMethod]
         public void UpdateAutoTest()
         {
@@ -191,41 +198,81 @@ namespace AutoReservation.Testing
 
             Assert.AreEqual(savedModified.Bis, newBis);
         }
+        #endregion Update
 
+        #region UpdateWithConcurrency
         [TestMethod]
+        [ExpectedException(typeof(FaultException<ConcurrencyException>))]
         public void UpdateAutoTestWithOptimisticConcurrency()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            AutoDto auto = CreateAuto();
+            AutoDto original = Target.InsertAuto(auto);
+
+            AutoDto original2 = (AutoDto)original.Clone();
+            original2.Marke = "Original2 Auto";
+
+            AutoDto modified = (AutoDto)original.Clone();
+            modified.Marke = "Updated Auto";
+
+            AutoDto savedModified = Target.UpdateAuto(original2, modified);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<ConcurrencyException>))]
         public void UpdateKundeTestWithOptimisticConcurrency()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            KundeDto kunde = CreateKunde();
+            KundeDto original = Target.InsertKunde(kunde);
+
+            KundeDto original2 = (KundeDto)original.Clone();
+            original2.Nachname = "Original2 Kunde";
+
+            KundeDto modified = (KundeDto)original.Clone();
+            modified.Nachname = "Updated Kunde";
+
+            KundeDto savedModified = Target.UpdateKunde(original2, modified);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<ConcurrencyException>))]
         public void UpdateReservationTestWithOptimisticConcurrency()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        }
+            ReservationDto original = Target.FindReservation(1);
 
+            ReservationDto original2 = (ReservationDto)original.Clone();
+            original2.Bis = new DateTime(2015, 03, 15);
+
+            ReservationDto modified = (ReservationDto)original.Clone();
+            modified.Bis = new DateTime(2015, 04, 15);
+
+            ReservationDto savedModified = Target.UpdateReservation(original2, modified);
+        }
+        #endregion UpdateWithConcurrency
+
+        #region Delete
         [TestMethod]
+        [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteKundeTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            KundeDto deletedKunde = Target.DeleteKunde(Target.FindKunde(1));
+            Target.FindKunde(deletedKunde.Id);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteAutoTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            AutoDto deletedAuto = Target.DeleteAuto(Target.FindAuto(1));
+            Target.FindAuto(deletedAuto.Id);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteReservationTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            ReservationDto deletedReservation = Target.DeleteReservation(Target.FindReservation(1));
+            Target.FindReservation(deletedReservation.ReservationNr);
         }
+        #endregion Delete
     }
 }

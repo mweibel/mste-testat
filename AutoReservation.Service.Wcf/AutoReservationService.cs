@@ -2,6 +2,7 @@
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.Common.Interfaces.Exceptions;
+using AutoReservation.Dal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,7 +39,15 @@ namespace AutoReservation.Service.Wcf
 
         public AutoDto UpdateAuto(AutoDto original, AutoDto modified)
         {
-            return bc.UpdateAuto(original.ConvertToEntity(), modified.ConvertToEntity()).ConvertToDto();
+            try
+            {
+                return bc.UpdateAuto(original.ConvertToEntity(), modified.ConvertToEntity()).ConvertToDto();
+            }
+            catch (LocalOptimisticConcurrencyException<Auto> e)
+            {
+                ConcurrencyException exc = new ConcurrencyException(e.Message);
+                throw new FaultException<ConcurrencyException>(exc, new FaultReason(exc.Message));
+            }
         }
 
         public AutoDto DeleteAuto(AutoDto auto)
@@ -73,7 +82,15 @@ namespace AutoReservation.Service.Wcf
 
         public KundeDto UpdateKunde(KundeDto original, KundeDto modified)
         {
-            return bc.UpdateKunde(original.ConvertToEntity(), modified.ConvertToEntity()).ConvertToDto();
+            try
+            {
+                return bc.UpdateKunde(original.ConvertToEntity(), modified.ConvertToEntity()).ConvertToDto();
+            }
+            catch (LocalOptimisticConcurrencyException<Kunde> e)
+            {
+                ConcurrencyException exc = new ConcurrencyException(e.Message);
+                throw new FaultException<ConcurrencyException>(exc, new FaultReason(exc.Message));
+            }
         }
 
         public KundeDto DeleteKunde(KundeDto kunde)
@@ -116,7 +133,15 @@ namespace AutoReservation.Service.Wcf
 
         public ReservationDto UpdateReservation(ReservationDto original, ReservationDto modified)
         {
-            return bc.UpdateReservation(original.ConvertToEntity(), modified.ConvertToEntity()).ConvertToDto();
+            try
+            {
+                return bc.UpdateReservation(original.ConvertToEntity(), modified.ConvertToEntity()).ConvertToDto();
+            }
+            catch (LocalOptimisticConcurrencyException<Reservation> e)
+            {
+                ConcurrencyException exc = new ConcurrencyException(e.Message);
+                throw new FaultException<ConcurrencyException>(exc, new FaultReason(exc.Message));
+            }
         }
 
         public ReservationDto DeleteReservation(ReservationDto reservation)
