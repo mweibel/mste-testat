@@ -158,7 +158,7 @@
           <Member Name="StandardAuto" Value="2" />
         </EnumType>
         <EntityType Name="LuxusklasseAuto" BaseType="AutoReservationEntitiesModel.Auto" >
-          <Property Type="Int32" Name="Basistarif" Nullable="false" />
+          <Property Type="Int32" Name="Basistarif" Nullable="false" ConcurrencyMode="None" />
         </EntityType>
         <EntityType Name="MittelklasseAuto" BaseType="AutoReservationEntitiesModel.Auto" />
         <EntityType Name="StandardAuto" BaseType="AutoReservationEntitiesModel.Auto" />

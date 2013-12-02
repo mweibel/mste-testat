@@ -57,19 +57,40 @@ namespace AutoReservation.Testing
         [TestMethod]
         public void UpdateAutoTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            // FIXME: Better way to do this?
+            Auto original = Target.FindAuto(1);
+            Auto modified = Target.FindAuto(1);
+
+            modified.Tagestarif = 900;
+
+            Target.UpdateAuto(original, modified);
+            Assert.IsTrue(modified.Tagestarif == 900, "Update failed");
         }
 
         [TestMethod]
         public void UpdateKundeTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            Kunde original = Target.FindKunde(1);
+            Kunde modified = Target.FindKunde(1);
+
+            modified.Vorname = "Foobar";
+
+            Target.UpdateKunde(original, modified);
+            Assert.IsTrue(modified.Vorname == "Foobar", "Update failed");
         }
 
         [TestMethod]
         public void UpdateReservationTest()
         {
-            Assert.Inconclusive("Test wurde noch nicht implementiert!");
+            Reservation original = Target.FindReservation(1);
+            Reservation modified = Target.FindReservation(1);
+
+            DateTime bis = new DateTime(2014, 12, 30);
+
+            modified.Bis = bis;
+
+            Target.UpdateReservation(original, modified);
+            Assert.IsTrue(modified.Bis == bis, "Update failed");
         }
 
     }
