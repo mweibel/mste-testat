@@ -1,4 +1,5 @@
 ﻿using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.Interfaces.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,13 @@ namespace AutoReservation.Common.Interfaces
         AutoDto FindAuto(int id);
 
         [OperationContract]
-        AutoDto InsertAuto(AutoDto entry);
+        AutoDto InsertAuto(AutoDto auto);
 
         [OperationContract]
         AutoDto UpdateAuto(AutoDto original, AutoDto modified);
 
         [OperationContract]
-        AutoDto DeleteAuto(AutoDto entry);
+        AutoDto DeleteAuto(AutoDto auto);
 
         IEnumerable<AutoDto> Autos { get; }
         #endregion Autos
@@ -38,13 +39,13 @@ namespace AutoReservation.Common.Interfaces
         KundeDto FindKunde(int id);
 
         [OperationContract]
-        KundeDto InsertKunde(KundeDto entry);
+        KundeDto InsertKunde(KundeDto kunde);
 
         [OperationContract]
         KundeDto UpdateKunde(KundeDto original, KundeDto modified);
 
         [OperationContract]
-        KundeDto DeleteKunde(KundeDto entry);
+        KundeDto DeleteKunde(KundeDto kunde);
 
         IEnumerable<KundeDto> Kunden { get; }
         #endregion Kunden
@@ -54,16 +55,17 @@ namespace AutoReservation.Common.Interfaces
         List<ReservationDto> FindAllReservationen();
 
         [OperationContract]
+        [FaultContract(typeof(NotFoundException))]
         ReservationDto FindReservation(int id);
 
         [OperationContract]
-        ReservationDto InsertReservation(ReservationDto entry);
+        ReservationDto InsertReservation(ReservationDto reservation);
 
         [OperationContract]
         ReservationDto UpdateReservation(ReservationDto original, ReservationDto modified);
 
         [OperationContract]
-        ReservationDto DeleteReservation(ReservationDto entry);
+        ReservationDto DeleteReservation(ReservationDto reservation);
 
         IEnumerable<ReservationDto> Reservationen { get; }
         #endregion Reservationen

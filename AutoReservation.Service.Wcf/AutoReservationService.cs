@@ -1,9 +1,11 @@
 ﻿using AutoReservation.BusinessLayer;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
+using AutoReservation.Common.Interfaces.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.ServiceModel;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -29,9 +31,9 @@ namespace AutoReservation.Service.Wcf
             return bc.FindAuto(id).ConvertToDto();
         }
 
-        public AutoDto InsertAuto(AutoDto entry)
+        public AutoDto InsertAuto(AutoDto auto)
         {
-            return bc.InsertAuto(entry.ConvertToEntity()).ConvertToDto();
+            return bc.InsertAuto(auto.ConvertToEntity()).ConvertToDto();
         }
 
         public AutoDto UpdateAuto(AutoDto original, AutoDto modified)
@@ -39,9 +41,9 @@ namespace AutoReservation.Service.Wcf
             return bc.UpdateAuto(original.ConvertToEntity(), modified.ConvertToEntity()).ConvertToDto();
         }
 
-        public AutoDto DeleteAuto(AutoDto entry)
+        public AutoDto DeleteAuto(AutoDto auto)
         {
-            return bc.DeleteAuto(entry.ConvertToEntity()).ConvertToDto();
+            return bc.DeleteAuto(auto.ConvertToEntity()).ConvertToDto();
         }
         #endregion Autos
 
@@ -64,9 +66,9 @@ namespace AutoReservation.Service.Wcf
             return bc.FindKunde(id).ConvertToDto();
         }
 
-        public KundeDto InsertKunde(KundeDto entry)
+        public KundeDto InsertKunde(KundeDto kunde)
         {
-            return bc.InsertKunde(entry.ConvertToEntity()).ConvertToDto();
+            return bc.InsertKunde(kunde.ConvertToEntity()).ConvertToDto();
         }
 
         public KundeDto UpdateKunde(KundeDto original, KundeDto modified)
@@ -74,9 +76,9 @@ namespace AutoReservation.Service.Wcf
             return bc.UpdateKunde(original.ConvertToEntity(), modified.ConvertToEntity()).ConvertToDto();
         }
 
-        public KundeDto DeleteKunde(KundeDto entry)
+        public KundeDto DeleteKunde(KundeDto kunde)
         {
-            return bc.DeleteKunde(entry.ConvertToEntity()).ConvertToDto();
+            return bc.DeleteKunde(kunde.ConvertToEntity()).ConvertToDto();
         }
         #endregion Kunden
 
@@ -96,12 +98,20 @@ namespace AutoReservation.Service.Wcf
 
         public ReservationDto FindReservation(int id)
         {
-            return bc.FindReservation(id).ConvertToDto();
+            try
+            {
+                return bc.FindReservation(id).ConvertToDto();
+            }
+            catch (InvalidOperationException)
+            {
+                NotFoundException exc = new NotFoundException("Reservation", id);
+                throw new FaultException<NotFoundException>(exc, new FaultReason(exc.Message));
+            }
         }
 
-        public ReservationDto InsertReservation(ReservationDto entry)
+        public ReservationDto InsertReservation(ReservationDto reservation)
         {
-            return bc.InsertReservation(entry.ConvertToEntity()).ConvertToDto();
+            return bc.InsertReservation(reservation.ConvertToEntity()).ConvertToDto();
         }
 
         public ReservationDto UpdateReservation(ReservationDto original, ReservationDto modified)
@@ -109,9 +119,9 @@ namespace AutoReservation.Service.Wcf
             return bc.UpdateReservation(original.ConvertToEntity(), modified.ConvertToEntity()).ConvertToDto();
         }
 
-        public ReservationDto DeleteReservation(ReservationDto entry)
+        public ReservationDto DeleteReservation(ReservationDto reservation)
         {
-            return bc.DeleteReservation(entry.ConvertToEntity()).ConvertToDto();
+            return bc.DeleteReservation(reservation.ConvertToEntity()).ConvertToDto();
         }
         #endregion Reservationen
     }

@@ -1,4 +1,5 @@
 ﻿using AutoReservation.Dal;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -58,9 +59,9 @@ namespace AutoReservation.BusinessLayer
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
                 // FIXME: fugly eager loading && fugly WHERE stuff. Better way?
-                return context.Reservationen.Include(r=>r.Auto)
-                    .Include(r=>r.Kunde)
-                    .Where(r=>r.ReservationNr == id).First();
+                return context.Reservationen.Include(r => r.Auto)
+                    .Include(r => r.Kunde)
+                    .Where(r => r.ReservationNr == id).First();
             }
         }
 
