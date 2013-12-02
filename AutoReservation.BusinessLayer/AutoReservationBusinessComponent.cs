@@ -137,7 +137,7 @@ namespace AutoReservation.BusinessLayer
 
         private T Insert<T>(AutoReservationEntities context, DbSet<T> dbSet, T entry) where T : class
         {
-            dbSet.Add(entry);
+            entry = dbSet.Add(entry);
             context.SaveChanges();
             return entry;
         }
