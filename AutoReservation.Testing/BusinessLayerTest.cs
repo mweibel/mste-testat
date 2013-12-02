@@ -51,7 +51,7 @@ namespace AutoReservation.Testing
 
             Auto insertedAuto = Target.InsertAuto(auto);
 
-            Assert.IsNotNull(insertedAuto.Id);
+            Assert.IsTrue(auto.Id > 0, "ID is not auto incremented. Probably insert didn't happen.");
         }
 
         [TestMethod]
