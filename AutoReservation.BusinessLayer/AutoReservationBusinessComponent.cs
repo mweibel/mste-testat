@@ -13,27 +13,28 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
-                return FindAll<Auto>(context.Set<Auto>());
+                return FindAll<Auto>(context.Autos);
             }
         }
         public List<Kunde> FindAllKunden()
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
-                return FindAll<Kunde>(context.Set<Kunde>());
+                return FindAll<Kunde>(context.Kunden);
             }
         }
         public List<Reservation> FindAllReservationen()
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
-                return FindAll<Reservation>(context.Set<Reservation>());
+                // FIXME: fugly eager loading. Better way?
+                return context.Reservationen.Include(r=>r.Auto).Include(r=>r.Kunde).ToList();
             }
         }
 
         public List<T> FindAll<T>(DbSet<T> entries) where T : class
         {
-            return new List<T>(entries);
+            return entries.ToList<T>();
         }
         #endregion FindAll
 
@@ -56,7 +57,10 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
-                return Find<Reservation>(context, context.Reservationen, id);
+                // FIXME: fugly eager loading && fugly WHERE stuff. Better way?
+                return context.Reservationen.Include(r=>r.Auto)
+                    .Include(r=>r.Kunde)
+                    .Where(r=>r.ReservationNr == id).First();
             }
         }
 

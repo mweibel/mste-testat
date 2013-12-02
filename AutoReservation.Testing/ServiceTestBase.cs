@@ -27,35 +27,48 @@ namespace AutoReservation.Testing
             Assert.IsTrue(autos.Count == 3, "Invalid amount of autos");
         }
 
-        //[TestMethod]
-        //public void KundenTest()
-        //{
-        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        //}
+        [TestMethod]
+        public void KundenTest()
+        {
+            List<KundeDto> kunden = Target.FindAllKunden();
 
-        //[TestMethod]
-        //public void ReservationenTest()
-        //{
-        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        //}
+            Assert.IsTrue(kunden.Count == 4, "Invalid amount of kunden");
+        }
 
-        //[TestMethod]
-        //public void GetAutoByIdTest()
-        //{
-        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        //}
+        [TestMethod]
+        public void ReservationenTest()
+        {
+            List<ReservationDto> reservationen = Target.FindAllReservationen();
 
-        //[TestMethod]
-        //public void GetKundeByIdTest()
-        //{
-        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        //}
+            Assert.IsTrue(reservationen.Count == 3, "Invalid amount of reservationen");
+        }
 
-        //[TestMethod]
-        //public void GetReservationByNrTest()
-        //{
-        //    Assert.Inconclusive("Test wurde noch nicht implementiert!");
-        //}
+        [TestMethod]
+        public void GetAutoByIdTest()
+        {
+            AutoDto auto = Target.FindAuto(1);
+
+            Assert.IsTrue(auto.Id == 1);
+            Assert.IsTrue(auto.Marke == "Fiat Punto");
+        }
+
+        [TestMethod]
+        public void GetKundeByIdTest()
+        {
+            KundeDto kunde = Target.FindKunde(1);
+
+            Assert.IsTrue(kunde.Id == 1);
+            Assert.IsTrue(kunde.Vorname == "Anna");
+        }
+
+        [TestMethod]
+        public void GetReservationByNrTest()
+        {
+            ReservationDto reservation = Target.FindReservation(1);
+
+            Assert.IsTrue(reservation.ReservationNr == 1);
+            Assert.AreEqual(reservation.Bis, new DateTime(2020, 01, 20));
+        }
 
         //[TestMethod]
         //public void GetReservationByIllegalNr()

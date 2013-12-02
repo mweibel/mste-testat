@@ -5,6 +5,8 @@ using System.Text;
 namespace AutoReservation.Common.DataTransferObjects
 {
     [DataContract]
+    [KnownType(typeof(AutoDto))]
+    [KnownType(typeof(KundeDto))]
     public class ReservationDto : DtoBase
     {
         private DateTime bis;
@@ -13,6 +15,7 @@ namespace AutoReservation.Common.DataTransferObjects
         private AutoDto auto;
         private KundeDto kunde;
 
+        [DataMember]
         public DateTime Bis
         {
             get { return bis; }
@@ -27,6 +30,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public DateTime Von
         {
             get { return von; }
@@ -41,6 +45,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public int ReservationNr
         {
             get { return reservationNr; }
@@ -55,12 +60,13 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public AutoDto Auto
         {
             get { return auto; }
             set
             {
-                if (!auto.Equals(value))
+                if (auto == null || !auto.Equals(value))
                 {
                     SendPropertyChanging(() => Auto);
                     auto = value;
@@ -69,12 +75,13 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public KundeDto Kunde
         {
             get { return kunde; }
             set
             {
-                if (!kunde.Equals(value))
+                if (kunde == null || !kunde.Equals(value))
                 {
                     SendPropertyChanging(() => Kunde);
                     kunde = value;

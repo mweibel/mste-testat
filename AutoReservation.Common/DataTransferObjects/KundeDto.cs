@@ -12,6 +12,7 @@ namespace AutoReservation.Common.DataTransferObjects
         private string nachname;
         private string vorname;
 
+        [DataMember]
         public DateTime Geburtsdatum
         {
             get { return geburtsdatum; }
@@ -26,6 +27,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public int Id
         {
             get { return id; }
@@ -40,6 +42,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public string Nachname
         {
             get { return nachname; }
@@ -54,6 +57,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public string Vorname
         {
             get { return vorname; }

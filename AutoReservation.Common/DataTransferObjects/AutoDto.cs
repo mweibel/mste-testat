@@ -4,6 +4,7 @@ using System.Text;
 namespace AutoReservation.Common.DataTransferObjects
 {
     [DataContract]
+    [KnownType(typeof(AutoKlasse))]
     public class AutoDto : DtoBase
     {
         private int id;
@@ -12,6 +13,7 @@ namespace AutoReservation.Common.DataTransferObjects
         private int basistarif;
         private AutoKlasse autoKlasse;
 
+        [DataMember]
         public int Id
         {
             get { return id; }
@@ -26,6 +28,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public string Marke
         {
             get { return marke; }
@@ -40,6 +43,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public int Tagestarif
         {
             get { return tagestarif; }
@@ -54,6 +58,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public int Basistarif
         {
             get { return basistarif; }
@@ -68,6 +73,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
+        [DataMember]
         public AutoKlasse AutoKlasse
         {
             get { return autoKlasse; }
