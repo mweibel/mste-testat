@@ -63,10 +63,10 @@
             <Button HorizontalAlignment="Left" Command="{Binding NewCommand}" Margin="5,0,0,0">
                 <Image Source="/Images/add_48_48.png" />
             </Button>
-            <Button HorizontalAlignment="Left" Command="{Binding DeleteCommand}" Margin="5,0,0,0" Style="{DynamicResource ValidatedButtonStyle}">
+            <Button HorizontalAlignment="Left" Command="{Binding DeleteCommand}" Margin="5,0,0,0">
                 <Image Source="/Images/delete_48_48.png" />
             </Button>
-            <Button HorizontalAlignment="Left" Command="{Binding SaveCommand}" Margin="5,0,0,0" Style="{DynamicResource ValidatedButtonStyle}">
+            <Button HorizontalAlignment="Left" Command="{Binding SaveCommand}" Margin="5,0,0,0">
                 <Image Source="/Images/save_48_48.png"  />
             </Button>
             <ScrollViewer Margin="5,0,0,0" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto">

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoReservation.Service.Wcf;
 
 namespace AutoReservation.Ui.Factory
 {
@@ -10,7 +11,8 @@ namespace AutoReservation.Ui.Factory
     {
         public override Common.Interfaces.IAutoReservationService CreateInstance()
         {
-            throw new NotImplementedException();
+			AutoReservationService local = new AutoReservationService();
+			return local;
         }
     }
 }
