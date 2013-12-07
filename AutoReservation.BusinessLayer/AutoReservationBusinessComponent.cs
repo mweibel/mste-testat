@@ -60,8 +60,7 @@ namespace AutoReservation.BusinessLayer
             {
                 // FIXME: fugly eager loading && fugly WHERE stuff. Better way?
                 return context.Reservationen.Include(r => r.Auto)
-                    .Include(r => r.Kunde)
-                    .Where(r => r.ReservationNr == id).First();
+                    .Include(r => r.Kunde).First(r => r.ReservationNr == id);
             }
         }
 

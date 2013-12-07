@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace AutoReservation.Common.Interfaces.Exceptions
 {
@@ -11,34 +8,18 @@ namespace AutoReservation.Common.Interfaces.Exceptions
     {
         public NotFoundException(String entityType, int entityId)
         {
-            this.entityType = entityType;
-            this.entityId = entityId;
+            this.EntityType = entityType;
+            this.EntityId = entityId;
+            this.Message = "Entity of Type '" + EntityType + "' with Id '" + EntityId + "' not found.";
         }
-        private String entityType;
-        private int entityId;
 
         [DataMember]
-        public String EntityType 
-        {
-            get {
-                return entityType;
-            }
-        }
+        public string EntityType { get; set; }
+
         [DataMember]
-        public int EntityId
-        {
-            get
-            {
-                return entityId;
-            }
-        }
+        public int EntityId { get; set; }
+
         [DataMember]
-        public String Message
-        {
-            get
-            {
-                return "Entity of Type '" + EntityType + "' with Id '" + EntityId + "' not found.";
-            }
-        }
+        public string Message { get; set; }
     }
 }

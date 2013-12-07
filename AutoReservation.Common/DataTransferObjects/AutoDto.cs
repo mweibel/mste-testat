@@ -7,22 +7,22 @@ namespace AutoReservation.Common.DataTransferObjects
     [KnownType(typeof(AutoKlasse))]
     public class AutoDto : DtoBase
     {
-        private int id;
-        private string marke;
-        private int tagestarif;
-        private int basistarif;
-        private AutoKlasse autoKlasse;
+        private int _id;
+        private string _marke;
+        private int _tagestarif;
+        private int _basistarif;
+        private AutoKlasse _autoKlasse;
 
         [DataMember]
         public int Id
         {
-            get { return id; }
+            get { return _id; }
             set
             {
-                if (id != value)
+                if (_id != value)
                 {
                     SendPropertyChanging(() => Id);
-                    id = value;
+                    _id = value;
                     SendPropertyChanged(() => Id);
                 }
             }
@@ -31,60 +31,64 @@ namespace AutoReservation.Common.DataTransferObjects
         [DataMember]
         public string Marke
         {
-            get { return marke; }
+            get { return _marke; }
             set
             {
-                if (marke != value)
+                if (_marke == value)
                 {
-                    SendPropertyChanging(() => Marke);
-                    marke = value;
-                    SendPropertyChanged(() => Marke);
+                    return;
                 }
+                SendPropertyChanging(() => Marke);
+                _marke = value;
+                SendPropertyChanged(() => Marke);
             }
         }
 
         [DataMember]
         public int Tagestarif
         {
-            get { return tagestarif; }
+            get { return _tagestarif; }
             set
             {
-                if (tagestarif != value)
+                if (_tagestarif == value)
                 {
-                    SendPropertyChanging(() => Tagestarif);
-                    tagestarif = value;
-                    SendPropertyChanged(() => Tagestarif);
+                    return;
                 }
+                SendPropertyChanging(() => Tagestarif);
+                _tagestarif = value;
+                SendPropertyChanged(() => Tagestarif);
             }
         }
 
         [DataMember]
         public int Basistarif
         {
-            get { return basistarif; }
+            get { return _basistarif; }
             set
             {
-                if (basistarif != value)
+                if (_basistarif == value)
                 {
-                    SendPropertyChanging(() => Basistarif);
-                    basistarif = value;
-                    SendPropertyChanged(() => Basistarif);
+                    return;
                 }
+                SendPropertyChanging(() => Basistarif);
+                _basistarif = value;
+                SendPropertyChanged(() => Basistarif);
             }
         }
 
         [DataMember]
         public AutoKlasse AutoKlasse
         {
-            get { return autoKlasse; }
+            get { return _autoKlasse; }
             set
             {
-                if (autoKlasse != value)
+                if (_autoKlasse == value)
                 {
-                    SendPropertyChanging(() => AutoKlasse);
-                    autoKlasse = value;
-                    SendPropertyChanged(() => AutoKlasse);
+                    return;
                 }
+                SendPropertyChanging(() => AutoKlasse);
+                _autoKlasse = value;
+                SendPropertyChanged(() => AutoKlasse);
             }
         }
 

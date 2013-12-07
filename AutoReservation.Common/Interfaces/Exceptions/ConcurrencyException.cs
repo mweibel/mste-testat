@@ -11,18 +11,10 @@ namespace AutoReservation.Common.Interfaces.Exceptions
     {
         public ConcurrencyException(String message)
         {
-            this.message = message;
+            this.Message = message;
         }
-
-        private String message;
 
         [DataMember]
-        public String Message
-        {
-            get
-            {
-                return message;
-            }
-        }
+        public string Message { get; set; }
     }
 }

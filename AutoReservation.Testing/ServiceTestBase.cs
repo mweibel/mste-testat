@@ -79,8 +79,9 @@ namespace AutoReservation.Testing
         public void GetReservationByIllegalNr()
         {
             // FIXME: FaultException Expecting doesn't work
-            ReservationDto reservation = Target.FindReservation(48539);
+            Target.FindReservation(48539);
         }
+
         #endregion FindById
 
         #region Insert
@@ -251,7 +252,6 @@ namespace AutoReservation.Testing
 
         #region Delete
         [TestMethod]
-        [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteKundeTest()
         {
             KundeDto deletedKunde = Target.DeleteKunde(Target.FindKunde(1));
@@ -259,7 +259,6 @@ namespace AutoReservation.Testing
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteAutoTest()
         {
             AutoDto deletedAuto = Target.DeleteAuto(Target.FindAuto(1));
@@ -267,7 +266,6 @@ namespace AutoReservation.Testing
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteReservationTest()
         {
             ReservationDto deletedReservation = Target.DeleteReservation(Target.FindReservation(1));
