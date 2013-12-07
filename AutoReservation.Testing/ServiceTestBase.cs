@@ -149,8 +149,8 @@ namespace AutoReservation.Testing
 
             Assert.IsTrue(savedReservation.ReservationNr > 0);
             // FIXME: Kunde / Auto are somehow not set
-            Assert.AreEqual(reservation.Kunde, savedReservation.Kunde);
-            Assert.AreEqual(reservation.Auto, savedReservation.Auto);
+            Assert.AreEqual(reservation.Kunde.Id, savedReservation.Kunde.Id);
+            Assert.AreEqual(reservation.Auto.Id, savedReservation.Auto.Id);
             Assert.AreEqual(reservation.Bis, savedReservation.Bis);
             Assert.AreEqual(reservation.Von, savedReservation.Von);
         }

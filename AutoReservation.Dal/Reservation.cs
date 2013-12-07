@@ -19,7 +19,7 @@ namespace AutoReservation.Dal
         public int KundeId { get; set; }
         public System.DateTime Von { get; set; }
         public System.DateTime Bis { get; set; }
-    
+
         public virtual Auto Auto { get; set; }
         public virtual Kunde Kunde { get; set; }
     }

@@ -107,7 +107,9 @@ namespace AutoReservation.Service.Wcf
                 Von = dto.Von,
                 Bis = dto.Bis,
                 AutoId = dto.Auto.Id,
-                KundeId = dto.Kunde.Id
+                KundeId = dto.Kunde.Id,
+                Auto = ConvertToEntity(dto.Auto),
+                Kunde = ConvertToEntity(dto.Kunde)
             };
 
             return reservation;

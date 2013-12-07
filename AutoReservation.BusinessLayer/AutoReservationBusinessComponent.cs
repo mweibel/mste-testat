@@ -119,18 +119,26 @@ namespace AutoReservation.BusinessLayer
                 return Insert<Auto>(context, context.Autos, auto);
             }
         }
-        public Kunde InsertKunde(Kunde auto)
+        public Kunde InsertKunde(Kunde kunde)
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
-                return Insert<Kunde>(context, context.Kunden, auto);
+                return Insert<Kunde>(context, context.Kunden, kunde);
             }
         }
-        public Reservation InsertReservation(Reservation auto)
+        public Reservation InsertReservation(Reservation reservation)
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
-                return Insert<Reservation>(context, context.Reservationen, auto);
+                // FIXME: UGLY: Prevent saving car/client again
+                Auto auto = reservation.Auto;
+                reservation.Auto = null;
+                Kunde kunde = reservation.Kunde;
+                reservation.Kunde = null;
+                reservation = Insert<Reservation>(context, context.Reservationen, reservation);
+                reservation.Auto = auto;
+                reservation.Kunde = kunde;
+                return reservation;
             }
         }
 
@@ -143,25 +151,25 @@ namespace AutoReservation.BusinessLayer
         #endregion Insert
 
         #region Delete
-        public Auto DeleteAuto(Auto entry)
+        public Auto DeleteAuto(Auto auto)
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
-                return Delete<Auto>(context, context.Autos, entry);
+                return Delete<Auto>(context, context.Autos, auto);
             }
         }
-        public Kunde DeleteKunde(Kunde entry)
+        public Kunde DeleteKunde(Kunde kunde)
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
-                return Delete<Kunde>(context, context.Kunden, entry);
+                return Delete<Kunde>(context, context.Kunden, kunde);
             }
         }
-        public Reservation DeleteReservation(Reservation entry)
+        public Reservation DeleteReservation(Reservation reservation)
         {
             using (AutoReservationEntities context = new AutoReservationEntities())
             {
-                return Delete<Reservation>(context, context.Reservationen, entry);
+                return Delete<Reservation>(context, context.Reservationen, reservation);
             }
         }
 
