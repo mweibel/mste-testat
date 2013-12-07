@@ -13,7 +13,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Margin="10">
         <TabControl>
             <TabItem Header="Autos">
                 <Views:AutoView x:Name="avAutoView"/>

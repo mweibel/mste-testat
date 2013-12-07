@@ -22,7 +22,7 @@
         <Converters:BasistarifVisibilityConverter x:Key="BasistarifVisibilityConverter" />
         <Converters:DetailViewVisibilityConverter x:Key="DetailViewVisibilityConverter" />
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="20" />
@@ -56,7 +56,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10,0,0">
             <Button HorizontalAlignment="Left" Command="{Binding LoadCommand}">
                 <Image Source="/Images/refresh_48_48.png" />
             </Button>
