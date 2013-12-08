@@ -105,7 +105,10 @@
 			</ComboBox>
 
 			<Label Grid.Row="1" Content="Auto"/>
-			<ComboBox Grid.Column="1" Grid.Row="1"  Margin="0,0,0,5"/>
+			<ComboBox Grid.Column="1" Grid.Row="1" Margin="0,0,0,5"
+				ItemsSource="{Binding Autos, Mode=OneWay}"
+				DisplayMemberPath="Marke"
+				SelectedItem="{Binding SelectedReservation.Auto}" />
 
 			<Label Grid.Row="2" Content="Von"/>
 			<DatePicker Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" SelectedDate="{Binding SelectedReservation.Von}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
