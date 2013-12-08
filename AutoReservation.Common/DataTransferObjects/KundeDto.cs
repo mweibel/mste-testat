@@ -114,5 +114,18 @@ namespace AutoReservation.Common.DataTransferObjects
                 Geburtsdatum);
         }
 
+		public override bool Equals(object obj)
+		{
+			bool equals = false;
+
+			if (obj.GetType() == typeof(KundeDto))
+			{
+				KundeDto other = (KundeDto)obj;
+				equals = other.Id.Equals(this.Id);
+			}
+
+			return equals;
+		}
+
     }
 }

@@ -1,64 +1,64 @@
-﻿<UserControl x:Class="AutoReservation.Ui.Views.ReservationView"
+﻿<UserControl
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Converters="clr-namespace:AutoReservation.Ui.Converters"
-    xmlns:ViewModels="clr-namespace:AutoReservation.Ui.ViewModels">
-    <UserControl.DataContext>
-        <ViewModels:ReservationViewModel />
-    </UserControl.DataContext>
-    <UserControl.Resources>
-        <Converters:DetailViewVisibilityConverter x:Key="DetailViewVisibilityConverter" />
+    xmlns:ViewModels="clr-namespace:AutoReservation.Ui.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="AutoReservation.Ui.Views.ReservationView"
+    >
+	<UserControl.Resources>
+		<Converters:DetailViewVisibilityConverter x:Key="DetailViewVisibilityConverter" />
 	</UserControl.Resources>
 
+	<UserControl.DataContext>
+		<ViewModels:ReservationViewModel />
+	</UserControl.DataContext>
+
 	<Grid Margin="5">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="250" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-			<RowDefinition Height="Auto
-						   " />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="20" />
+			<ColumnDefinition Width="250" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto          " />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
 
 		<ToolBarTray Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,0,10">
 			<ToolBar>
 				<Button Command="{Binding NewCommand}">
 					<StackPanel Orientation="Horizontal">
 						<Image Source="/Images/add.png" Width="16" />
-						<TextBlock Margin="3,0,0,0">Neu</TextBlock>
+						<TextBlock Margin="3,0,0,0"><Run Text="Neu"/></TextBlock>
 					</StackPanel>
 				</Button>
 				<Button Command="{Binding DeleteCommand}">
 					<StackPanel Orientation="Horizontal">
 						<Image Source="/Images/delete.png" Width="16" />
-						<TextBlock Margin="3,0,0,0">Löschen</TextBlock>
+						<TextBlock Margin="3,0,0,0"><Run Text="Löschen"/></TextBlock>
 					</StackPanel>
 				</Button>
 				<Button Command="{Binding SaveCommand}">
 					<StackPanel Orientation="Horizontal">
 						<Image Source="/Images/disk.png" Width="16" />
-						<TextBlock Margin="3,0,0,0">Speichern</TextBlock>
+						<TextBlock Margin="3,0,0,0"><Run Text="Speichern"/></TextBlock>
 					</StackPanel>
 				</Button>
 				<Separator/>
 				<Button Command="{Binding LoadCommand}">
 					<StackPanel Orientation="Horizontal">
 						<Image Source="/Images/arrow_refresh.png" Width="16" />
-						<TextBlock Margin="3,0,0,0">Aktualisieren</TextBlock>
+						<TextBlock Margin="3,0,0,0"><Run Text="Aktualisieren"/></TextBlock>
 					</StackPanel>
 				</Button>
 			</ToolBar>
 		</ToolBarTray>
 
-		<!-- List -->
-        <DataGrid Grid.Row="1"
-                    Name="dgReservationen" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
-                    SelectionMode="Single" IsReadOnly="True"
-                    ItemsSource="{Binding Reservationen}" 
-                    SelectedItem="{Binding SelectedReservation, Mode=TwoWay}">
-            <DataGrid.Columns>
+		<DataGrid Grid.Row="1"
+			x:Name="dgReservationen" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
+			SelectionMode="Single" IsReadOnly="True"
+			ItemsSource="{Binding Reservationen}" 
+			SelectedItem="{Binding SelectedReservation, Mode=TwoWay}">
+			<DataGrid.Columns>
 				<DataGridTextColumn Header="Kunde">
 					<DataGridTextColumn.Binding>
 						<MultiBinding StringFormat="{}{0} {1}">
@@ -67,46 +67,55 @@
 						</MultiBinding>
 					</DataGridTextColumn.Binding>
 				</DataGridTextColumn>
-
 				<DataGridTextColumn Header="Auto" Binding="{Binding Auto.Marke}" />
-				<DataGridTextColumn Header="Von" Binding="{Binding Von, StringFormat=\{0:dd.MM.yyyy\}, Mode=TwoWay}" />
-				<DataGridTextColumn Header="Bis" Binding="{Binding Bis, StringFormat=\{0:dd.MM.yyyy\}, Mode=TwoWay}" />
-            </DataGrid.Columns>
-        </DataGrid>
+				<DataGridTextColumn Header="Von" Binding="{Binding Von, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" />
+				<DataGridTextColumn Header="Bis" Binding="{Binding Bis, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" />
+			</DataGrid.Columns>
+		</DataGrid>
 
-		<!-- Details  Visibility="{Binding SelectedReservation, Converter={StaticResource DetailViewVisibilityConverter}, Mode=TwoWay}" -->
 		<Grid Grid.Column="3" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="150" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="100" />
+				<ColumnDefinition Width="150" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-			
-			<Label Grid.Row="0">Kunde</Label>
-			<ComboBox Grid.Column="1" Grid.Row="0"
-					  ItemsSource="{Binding Kunden}"
-					  DisplayMemberPath="Nachname"
-					  SelectedItem="{Binding SelectedReservation.Kunde}">
-			</ComboBox>
-			
-			<Label Grid.Row="1">Auto</Label>
-			<ComboBox Grid.Column="1" Grid.Row="1" />
-			
-            <Label Grid.Row="2">Von</Label>
-			<DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding SelectedReservation.Von}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
-			
-			<Label Grid.Row="3">Bis</Label>
-			<DatePicker Grid.Column="1" Grid.Row="3" SelectedDate="{Binding SelectedReservation.Bis}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
 
-			<ScrollViewer Grid.Row="4" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto">
+			<Label Grid.Row="0" Content="Kunde"/>
+			<ComboBox Grid.Column="1" Grid.Row="0" Margin="0,0,0,5"
+				ItemsSource="{Binding Kunden, Mode=OneWay}"
+				SelectedItem="{Binding SelectedReservation.Kunde}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock>
+							<TextBlock.Text>
+								<MultiBinding StringFormat="{}{0} {1}">
+									<Binding Path="Nachname"/>
+									<Binding Path="Vorname"/>
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+
+			<Label Grid.Row="1" Content="Auto"/>
+			<ComboBox Grid.Column="1" Grid.Row="1"  Margin="0,0,0,5"/>
+
+			<Label Grid.Row="2" Content="Von"/>
+			<DatePicker Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" SelectedDate="{Binding SelectedReservation.Von}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
+
+			<Label Grid.Row="3" Content="Bis"/>
+			<DatePicker Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" SelectedDate="{Binding SelectedReservation.Bis}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
+
+			<ScrollViewer Grid.Row="4" Grid.ColumnSpan="2" Margin="0,10,0,5" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto">
 				<TextBlock Text="{Binding ErrorText}" Foreground="Red"/>
 			</ScrollViewer>
-        </Grid>
-    </Grid>
+		</Grid>
+	</Grid>
 </UserControl>
