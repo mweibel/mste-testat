@@ -73,7 +73,7 @@
 			</DataGrid.Columns>
 		</DataGrid>
 
-		<Grid Grid.Column="3" Grid.Row="1">
+		<Grid Grid.Column="3" Grid.Row="1" Visibility="{Binding SelectedReservation, Converter={StaticResource DetailViewVisibilityConverter}, Mode=TwoWay}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="100" />
 				<ColumnDefinition Width="150" />

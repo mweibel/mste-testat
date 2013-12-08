@@ -60,7 +60,7 @@
             </ScrollViewer>
         </StackPanel>
         <!-- Details -->
-        <Grid Grid.Column="3" Visibility="{Binding SelectedKunde, Converter={StaticResource DetailViewVisibilityConverter}, Mode=TwoWay}">
+		<Grid Grid.Column="3"  Visibility="{Binding SelectedKunde, Converter={StaticResource DetailViewVisibilityConverter}, Mode=TwoWay}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="150" />
@@ -81,9 +81,9 @@
                    FontSize="16" FontWeight="UltraBold" FontStyle="Italic">
                 Kunde Editieren
             </Label>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedKunde.Nachname}" />
-            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedKunde.Vorname}" />
-            <DatePicker Grid.Column="1" Grid.Row="3" SelectedDate="{Binding SelectedKunde.Geburtsdatum}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedKunde.Nachname}" Margin="0,0,0,5" />
+            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedKunde.Vorname}" Margin="0,0,0,5" />
+            <DatePicker Grid.Column="1" Grid.Row="3" SelectedDate="{Binding SelectedKunde.Geburtsdatum}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" Margin="0,0,0,5" />
         </Grid>
     </Grid>
 </UserControl>
