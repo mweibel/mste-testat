@@ -24,6 +24,22 @@ namespace AutoReservation.Ui.ViewModels
             }
         }
 
+		private readonly List<KundeDto> kundenOriginal = new List<KundeDto>();
+		private ObservableCollection<KundeDto> kunden;
+		public ObservableCollection<KundeDto> Kunden
+		{
+			get
+			{
+				if (kunden == null)
+				{
+					kunden = new ObservableCollection<KundeDto>();
+				}
+				return kunden;
+			}
+		}
+
+
+
         private ReservationDto selectedReservation;
         public ReservationDto SelectedReservation
         {
@@ -69,6 +85,16 @@ namespace AutoReservation.Ui.ViewModels
                 reservationOriginal.Add((ReservationDto)reservation.Clone());
             }
             SelectedReservation = Reservationen.FirstOrDefault();
+
+
+			// We need the customers too, for the combobox :)
+			Kunden.Clear();
+			kundenOriginal.Clear();
+			foreach (KundeDto kunde in Service.Kunden)
+			{
+				Kunden.Add(kunde);
+				kundenOriginal.Add((KundeDto)kunde.Clone());
+			}
         }
 
         private bool CanLoad()
