@@ -58,7 +58,7 @@
                     SelectedItem="{Binding SelectedKunde, Mode=TwoWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nachname" Binding="{Binding Nachname}" />
-                <DataGridTextColumn Header="Vorname" Binding="{Binding Vorname}" />
+                <DataGridTextColumn Header="Vorname" Binding="{Binding Vorname}" Width="*" />
                 <DataGridTextColumn Header="Geburtsdatum" Binding="{Binding Geburtsdatum, StringFormat=\{0:dd.MM.yyyy\}, Mode=TwoWay}" />
             </DataGrid.Columns>
         </DataGrid>

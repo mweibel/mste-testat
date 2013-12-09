@@ -68,7 +68,7 @@
 						</MultiBinding>
 					</DataGridTextColumn.Binding>
 				</DataGridTextColumn>
-				<DataGridTextColumn Header="Auto" Binding="{Binding Auto.Marke}" />
+				<DataGridTextColumn Header="Auto" Binding="{Binding Auto.Marke}" Width="*" />
 				<DataGridTextColumn Header="Von" Binding="{Binding Von, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" />
 				<DataGridTextColumn Header="Bis" Binding="{Binding Bis, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" />
 			</DataGrid.Columns>
