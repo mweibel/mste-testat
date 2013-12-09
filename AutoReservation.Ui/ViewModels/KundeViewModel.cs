@@ -99,16 +99,16 @@ namespace AutoReservation.Ui.ViewModels
 
         private void SaveData()
         {
-            foreach (KundeDto kunde in Kunden)
+            foreach (KundeDto modified in Kunden)
             {
-                if (kunde.Id == default(int))
+                if (modified.Id == default(int))
                 {
-                    Service.InsertKunde(kunde);
+                    Service.InsertKunde(modified);
                 }
                 else
                 {
-                    KundeDto original = kundenOriginal.FirstOrDefault(ao => ao.Id == kunde.Id);
-                    Service.UpdateKunde(kunde, original);
+                    KundeDto original = kundenOriginal.FirstOrDefault(ao => ao.Id == modified.Id);
+                    Service.UpdateKunde(original, modified);
                 }
             }
             Load();

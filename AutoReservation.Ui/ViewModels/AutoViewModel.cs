@@ -97,16 +97,16 @@ namespace AutoReservation.Ui.ViewModels
 
         private void SaveData()
         {
-            foreach (AutoDto auto in Autos)
+            foreach (AutoDto modified in Autos)
             {
-                if (auto.Id == default(int))
+                if (modified.Id == default(int))
                 {
-                    Service.InsertAuto(auto);
+                    Service.InsertAuto(modified);
                 }
                 else
                 {
-                    AutoDto original = autosOriginal.FirstOrDefault(ao => ao.Id == auto.Id);
-                    Service.UpdateAuto(auto, original);
+                    AutoDto original = autosOriginal.FirstOrDefault(ao => ao.Id == modified.Id);
+                    Service.UpdateAuto(original, modified);
                 }
             }
             Load();
