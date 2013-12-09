@@ -23,40 +23,38 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
-		<ToolBarTray  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,0,10">
-			<ToolBar>
-				<Button Width="40" Height="40" Command="{Binding NewCommand}" Style="{DynamicResource MetroCircleButtonStyle}">
-                    <Rectangle Width="15" Height="15">
-                        <Rectangle.Fill>
-                            <VisualBrush Stretch="Fill"  Visual="{StaticResource appbar_add}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-				</Button>
-                <Button Width="40" Height="40" Command="{Binding DeleteCommand}" Style="{DynamicResource MetroCircleButtonStyle}">
-                    <Rectangle Width="15" Height="15">
-                        <Rectangle.Fill>
-                            <VisualBrush Stretch="Fill"  Visual="{StaticResource appbar_delete}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                </Button>
-                <Button Width="40" Height="40" Command="{Binding SaveCommand}" Style="{DynamicResource MetroCircleButtonStyle}">
-                    <Rectangle Width="15" Height="15">
-                        <Rectangle.Fill>
-                            <VisualBrush Stretch="Fill"  Visual="{StaticResource appbar_save}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-				</Button>
-                <Button Width="40" Height="40" Command="{Binding LoadCommand}" Style="{DynamicResource MetroCircleButtonStyle}">
-                    <Rectangle Width="15" Height="15">
-                        <Rectangle.Fill>
-                            <VisualBrush Stretch="Fill"  Visual="{StaticResource appbar_refresh}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                </Button>
-			</ToolBar>
-		</ToolBarTray>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Width="40" Height="40" Command="{Binding NewCommand}" Style="{DynamicResource MetroCircleButtonStyle}">
+                <Rectangle Width="15" Height="15">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Button>
+            <Button Width="40" Height="40" Command="{Binding DeleteCommand}" Style="{DynamicResource MetroCircleButtonStyle}">
+                <Rectangle Width="15" Height="15">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill"  Visual="{StaticResource appbar_delete}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Button>
+            <Button Width="40" Height="40" Command="{Binding SaveCommand}" Style="{DynamicResource MetroCircleButtonStyle}">
+                <Rectangle Width="15" Height="15">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill"  Visual="{StaticResource appbar_save}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Button>
+            <Button Width="40" Height="40" Command="{Binding LoadCommand}" Style="{DynamicResource MetroCircleButtonStyle}">
+                <Rectangle Width="15" Height="15">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill"  Visual="{StaticResource appbar_refresh}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Button>
+        </StackPanel>
 
-		<DataGrid Grid.Row="1"
+		<DataGrid Grid.Row="1" Grid.Column="0"
 			x:Name="dgReservationen" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"
 			SelectionMode="Single" IsReadOnly="True"
 			ItemsSource="{Binding Reservationen}" 
