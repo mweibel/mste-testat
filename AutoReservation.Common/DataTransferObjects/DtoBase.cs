@@ -12,35 +12,35 @@ namespace AutoReservation.Common.DataTransferObjects
         public abstract string Validate();
         public abstract object Clone();
 
-        private PropertyChangingEventHandler propertyChangingEvent;
-        private PropertyChangedEventHandler propertyChangedEvent;
+        private PropertyChangingEventHandler _propertyChangingEvent;
+        private PropertyChangedEventHandler _propertyChangedEvent;
 
         public event PropertyChangingEventHandler PropertyChanging
         {
-            add { propertyChangingEvent += value; }
-            remove { propertyChangingEvent -= value; }
+            add { _propertyChangingEvent += value; }
+            remove { _propertyChangingEvent -= value; }
         }
 
         public event PropertyChangedEventHandler PropertyChanged
         {
-            add { propertyChangedEvent += value; }
-            remove { propertyChangedEvent -= value; }
+            add { _propertyChangedEvent += value; }
+            remove { _propertyChangedEvent -= value; }
         }
 
         protected void SendPropertyChanged<T>(Expression<Func<T>> expression)
         {
             var propertyName = ExtractPropertyName(expression);
-            if (propertyChangedEvent != null)
+            if (_propertyChangedEvent != null)
             {
-                propertyChangedEvent(this, new PropertyChangedEventArgs(propertyName));
+                _propertyChangedEvent(this, new PropertyChangedEventArgs(propertyName));
             }
         }
         protected void SendPropertyChanging<T>(Expression<Func<T>> expression)
         {
             var propertyName = ExtractPropertyName(expression);
-            if (propertyChangingEvent != null)
+            if (_propertyChangingEvent != null)
             {
-                propertyChangingEvent(this, new PropertyChangingEventArgs(propertyName));
+                _propertyChangingEvent(this, new PropertyChangingEventArgs(propertyName));
             }
         }
 
@@ -63,7 +63,7 @@ namespace AutoReservation.Common.DataTransferObjects
                 throw new ArgumentException("Der Member-Ausdruck greift nicht auf eine Eigenschaft zu.", "expression");
             }
 
-            if (!property.DeclaringType.IsAssignableFrom(this.GetType()))
+            if (property.DeclaringType != null && !property.DeclaringType.IsAssignableFrom(this.GetType()))
             {
                 throw new ArgumentException("Die referenzierte Eigenschaft gehört nicht zum gewünschten Typ.", "expression");
             }
@@ -81,6 +81,27 @@ namespace AutoReservation.Common.DataTransferObjects
 
             return memberExpression.Member.Name;
         }
+
+
+	    protected abstract int GetIdForComparison();
+
+		public override bool Equals(object obj)
+		{
+			bool equals = false;
+
+			if (obj != null && obj is DtoBase)
+			{
+				DtoBase other = (DtoBase)obj;
+				equals = other.GetIdForComparison().Equals(GetIdForComparison());
+			}
+
+			return equals;
+		}
+
+		public override int GetHashCode()
+		{
+			return GetIdForComparison().GetHashCode();
+		}
 
     }
 }

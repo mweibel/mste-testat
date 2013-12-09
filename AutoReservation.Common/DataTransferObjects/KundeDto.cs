@@ -7,21 +7,21 @@ namespace AutoReservation.Common.DataTransferObjects
     [DataContract]
     public class KundeDto : DtoBase
     {
-        private DateTime geburtsdatum;
-        private int id;
-        private string nachname;
-        private string vorname;
+        private DateTime _geburtsdatum;
+        private int _id;
+        private string _nachname;
+        private string _vorname;
 
         [DataMember]
         public DateTime Geburtsdatum
         {
-            get { return geburtsdatum; }
+            get { return _geburtsdatum; }
             set
             {
-                if (geburtsdatum != value)
+                if (_geburtsdatum != value)
                 {
                     SendPropertyChanging(() => Geburtsdatum);
-                    geburtsdatum = value;
+                    _geburtsdatum = value;
                     SendPropertyChanged(() => Geburtsdatum);
                 }
             }
@@ -30,13 +30,13 @@ namespace AutoReservation.Common.DataTransferObjects
         [DataMember]
         public int Id
         {
-            get { return id; }
+            get { return _id; }
             set
             {
-                if (id != value)
+                if (_id != value)
                 {
                     SendPropertyChanging(() => Id);
-                    id = value;
+                    _id = value;
                     SendPropertyChanged(() => Id);
                 }
             }
@@ -45,13 +45,13 @@ namespace AutoReservation.Common.DataTransferObjects
         [DataMember]
         public string Nachname
         {
-            get { return nachname; }
+            get { return _nachname; }
             set
             {
-                if (nachname != value)
+                if (_nachname != value)
                 {
                     SendPropertyChanging(() => Nachname);
-                    nachname = value;
+                    _nachname = value;
                     SendPropertyChanged(() => Nachname);
                 }
             }
@@ -60,13 +60,13 @@ namespace AutoReservation.Common.DataTransferObjects
         [DataMember]
         public string Vorname
         {
-            get { return vorname; }
+            get { return _vorname; }
             set
             {
-                if (vorname != value)
+                if (_vorname != value)
                 {
                     SendPropertyChanging(() => Vorname);
-                    vorname = value;
+                    _vorname = value;
                     SendPropertyChanged(() => Vorname);
                 }
             }
@@ -114,23 +114,9 @@ namespace AutoReservation.Common.DataTransferObjects
                 Geburtsdatum);
         }
 
-		public override bool Equals(object obj)
-		{
-			bool equals = false;
-
-			if (obj != null && obj.GetType() == typeof(KundeDto))
-			{
-				KundeDto other = (KundeDto)obj;
-				equals = other.Id.Equals(this.Id);
-			}
-
-			return equals;
-		}
-
-	    public override int GetHashCode()
+	    protected override int GetIdForComparison()
 	    {
-		    return this.Id.GetHashCode();
+		    return Id;
 	    }
-
     }
 }

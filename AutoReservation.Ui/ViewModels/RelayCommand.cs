@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AutoReservation.Ui.ViewModels
@@ -60,7 +61,10 @@ namespace AutoReservation.Ui.ViewModels
 
         public void Execute(object parameter)
         {
-            execute(parameter);
+	        TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+	        //Task.Factory.StartNew(() => execute(parameter));
+			//await Task.Run(() => execute(parameter));  // does the work
+	        execute(parameter);
         }
 
         #endregion
