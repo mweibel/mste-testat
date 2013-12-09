@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace AutoReservation.Ui.ViewModels
 {
+    /**
+     * From: http://blog.mycupof.net/2012/08/23/mvvm-asyncdelegatecommand-what-asyncawait-can-do-for-uidevelopment/
+     */
     public class AsyncRelayCommand : ICommand
     {
         protected readonly Predicate<object> _canExecute;
