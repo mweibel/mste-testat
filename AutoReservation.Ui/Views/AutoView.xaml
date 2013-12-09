@@ -72,7 +72,7 @@
                     ItemsSource="{Binding Autos}" 
                     SelectedItem="{Binding SelectedAuto, Mode=TwoWay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Marke" Binding="{Binding Marke}" />
+                <DataGridTextColumn Header="Marke" Binding="{Binding Marke}" Width="*" />
                 <DataGridTextColumn Header="Auto Klasse" Binding="{Binding AutoKlasse}" />
                 <DataGridTextColumn Header="Tagestarif" Binding="{Binding Tagestarif}" />
                 <DataGridTextColumn Header="Basistarif" Binding="{Binding Basistarif}" />
