@@ -136,9 +136,9 @@ namespace AutoReservation.Ui.ViewModels
 
         #region Commands
 
-        private RelayCommand deleteCommand;
+        private AsyncRelayCommand deleteCommand;
         private RelayCommand loadCommand;
-        private RelayCommand saveCommand;
+        private AsyncRelayCommand saveCommand;
         private RelayCommand newCommand;
 
         public ICommand LoadCommand
@@ -165,10 +165,14 @@ namespace AutoReservation.Ui.ViewModels
             {
                 if (saveCommand == null)
                 {
-                    saveCommand = new RelayCommand(
-                        param => SaveData(),
+                    saveCommand = new AsyncRelayCommand(
+                        async param =>
+                        {
+                            await Task.Run(() => SaveData());
+                            Load();
+                        },
                         param => CanSaveData()
-                        );
+                   );
                 }
                 return saveCommand;
             }
@@ -201,8 +205,12 @@ namespace AutoReservation.Ui.ViewModels
             {
                 if (deleteCommand == null)
                 {
-                    deleteCommand = new RelayCommand(
-                        param => Delete(),
+                    deleteCommand = new AsyncRelayCommand(
+                        async param =>
+                        {
+                            await Task.Run(() => Delete());
+                            Load();
+                        },
                         param => CanDelete()
                         );
                 }

@@ -120,6 +120,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\DetailViewVisibilityConverter.cs" />
+    <Compile Include="ViewModels\AsyncRelayCommand.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ReservationViewModel.cs" />
     <Compile Include="ViewModels\KundeViewModel.cs" />
     <Compile Include="Views\AutoView.xaml.cs">
@@ -141,7 +143,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\AutoViewModel.cs" />
-    <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\ReservationView.xaml.cs">
       <DependentUpon>ReservationView.xaml</DependentUpon>

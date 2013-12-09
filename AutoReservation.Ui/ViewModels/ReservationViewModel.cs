@@ -127,7 +127,6 @@ namespace AutoReservation.Ui.ViewModels
                     Service.UpdateReservation(original, modified);
                 }
             }
-            Load();
         }
 
         protected override bool CanSaveData()
@@ -173,7 +172,6 @@ namespace AutoReservation.Ui.ViewModels
         protected override void Delete()
         {
             Service.DeleteReservation(SelectedReservation);
-            Load();
         }
 
         protected override bool CanDelete()
