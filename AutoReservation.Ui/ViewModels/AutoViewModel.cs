@@ -109,7 +109,9 @@ namespace AutoReservation.Ui.ViewModels
 
         protected override void New()
         {
-            Autos.Add(new AutoDto());
+            AutoDto auto = new AutoDto();
+            Autos.Add(auto);
+            SelectedAuto = auto;
         }
 
         protected override bool CanNew()

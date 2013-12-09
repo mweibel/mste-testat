@@ -109,7 +109,9 @@ namespace AutoReservation.Ui.ViewModels
         #region New-Command
         protected override void New()
         {
-            Kunden.Add(new KundeDto { Geburtsdatum = DateTime.Today });
+            KundeDto kunde = new KundeDto {Geburtsdatum = DateTime.Today};
+            Kunden.Add(kunde);
+            SelectedKunde = kunde;
         }
 
         protected override bool CanNew()
