@@ -136,23 +136,9 @@ namespace AutoReservation.Common.DataTransferObjects
                 AutoKlasse);
         }
 
-
-		public override bool Equals(object obj)
-		{
-			bool equals = false;
-
-			if(obj != null && obj.GetType() == typeof(AutoDto))
-			{
-				AutoDto other = (AutoDto)obj;
-				equals = other.Id.Equals(this.Id);
-			}
-
-			return equals;
-		}
-
-		public override int GetHashCode()
-		{
-			return this.Id.GetHashCode();
-		}
+	    protected override int GetIdForComparison()
+	    {
+		    return Id;
+	    }
     }
 }
