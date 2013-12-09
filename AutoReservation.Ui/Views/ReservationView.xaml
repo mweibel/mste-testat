@@ -19,7 +19,7 @@
 			<ColumnDefinition Width="250" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto          " />
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
@@ -76,7 +76,7 @@
 			</DataGrid.Columns>
 		</DataGrid>
 
-		<Grid Grid.Column="3" Grid.Row="1">
+		<Grid Grid.Column="3" Grid.Row="1" Visibility="{Binding SelectedReservation, Converter={StaticResource DetailViewVisibilityConverter}, Mode=TwoWay}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="100" />
 				<ColumnDefinition Width="150" />
@@ -108,7 +108,10 @@
 			</ComboBox>
 
 			<Label Grid.Row="1" Content="Auto"/>
-			<ComboBox Grid.Column="1" Grid.Row="1"  Margin="0,0,0,5"/>
+			<ComboBox Grid.Column="1" Grid.Row="1" Margin="0,0,0,5"
+				ItemsSource="{Binding Autos, Mode=OneWay}"
+				DisplayMemberPath="Marke"
+				SelectedItem="{Binding SelectedReservation.Auto}" />
 
 			<Label Grid.Row="2" Content="Von"/>
 			<DatePicker Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" SelectedDate="{Binding SelectedReservation.Von}" DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />

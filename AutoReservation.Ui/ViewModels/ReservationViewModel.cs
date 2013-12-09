@@ -38,6 +38,20 @@ namespace AutoReservation.Ui.ViewModels
 			}
 		}
 
+		private readonly List<AutoDto> autosOriginal = new List<AutoDto>();
+		private ObservableCollection<AutoDto> autos;
+		public ObservableCollection<AutoDto> Autos
+		{
+			get
+			{
+				if (autos == null)
+				{
+					autos = new ObservableCollection<AutoDto>();
+				}
+				return autos;
+			}
+		}
+
 
 
         private ReservationDto selectedReservation;
@@ -94,6 +108,16 @@ namespace AutoReservation.Ui.ViewModels
 			{
 				Kunden.Add(kunde);
 				kundenOriginal.Add((KundeDto)kunde.Clone());
+			}
+
+
+			// We need the customers too, for the combobox :)
+			Autos.Clear();
+			autosOriginal.Clear();
+			foreach (AutoDto auto in Service.Autos)
+			{
+				Autos.Add(auto);
+				autosOriginal.Add((AutoDto)auto.Clone());
 			}
         }
 
