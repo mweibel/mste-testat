@@ -72,23 +72,6 @@ namespace AutoReservation.Ui.ViewModels
 
         #region Load-Command
 
-        private RelayCommand loadCommand;
-
-        public ICommand LoadCommand
-        {
-            get
-            {
-                if (loadCommand == null)
-                {
-                    loadCommand = new RelayCommand(
-                        param => Load(),
-                        param => CanLoad()
-                    );
-                }
-                return loadCommand;
-            }
-        }
-
         protected override void Load()
         {
             Reservationen.Clear();
@@ -121,7 +104,7 @@ namespace AutoReservation.Ui.ViewModels
 			}
         }
 
-        private bool CanLoad()
+        protected override bool CanLoad()
         {
             return Service != null;
         }
@@ -130,24 +113,7 @@ namespace AutoReservation.Ui.ViewModels
 
         #region Save-Command
 
-        private RelayCommand saveCommand;
-
-        public ICommand SaveCommand
-        {
-            get
-            {
-                if (saveCommand == null)
-                {
-                    saveCommand = new RelayCommand(
-                        param => SaveData(),
-                        param => CanSaveData()
-                    );
-                }
-                return saveCommand;
-            }
-        }
-
-        private void SaveData()
+        protected override void SaveData()
         {
             foreach (ReservationDto modified in Reservationen)
             {
@@ -164,7 +130,7 @@ namespace AutoReservation.Ui.ViewModels
             Load();
         }
 
-        private bool CanSaveData()
+        protected override bool CanSaveData()
         {
             if (Service == null)
             {
@@ -191,29 +157,12 @@ namespace AutoReservation.Ui.ViewModels
 
         #region New-Command
 
-        private RelayCommand newCommand;
-
-        public ICommand NewCommand
-        {
-            get
-            {
-                if (newCommand == null)
-                {
-                    newCommand = new RelayCommand(
-                        param => New(),
-                        param => CanNew()
-                    );
-                }
-                return newCommand;
-            }
-        }
-
-        private void New()
+        protected override void New()
         {
             // TODO Kunden.Add(new ReservationDto { Geburtsdatum = DateTime.Today });
         }
 
-        private bool CanNew()
+        protected override bool CanNew()
         {
             return Service != null;
         }
@@ -221,31 +170,13 @@ namespace AutoReservation.Ui.ViewModels
         #endregion
 
         #region Delete-Command
-
-        private RelayCommand deleteCommand;
-
-        public ICommand DeleteCommand
-        {
-            get
-            {
-                if (deleteCommand == null)
-                {
-                    deleteCommand = new RelayCommand(
-                        param => Delete(),
-                        param => CanDelete()
-                    );
-                }
-                return deleteCommand;
-            }
-        }
-
-        private void Delete()
+        protected override void Delete()
         {
             Service.DeleteReservation(SelectedReservation);
             Load();
         }
 
-        private bool CanDelete()
+        protected override bool CanDelete()
         {
             return
                 SelectedReservation != null &&

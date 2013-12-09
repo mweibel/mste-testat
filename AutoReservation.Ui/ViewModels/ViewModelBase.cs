@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Threading;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.Ui.Factory;
@@ -61,9 +63,9 @@ namespace AutoReservation.Ui.ViewModels
             }
         }
 
-        protected abstract void Load();
 
         private string errorText;
+
         public string ErrorText
         {
             get
@@ -132,5 +134,85 @@ namespace AutoReservation.Ui.ViewModels
 
         #endregion
 
+        #region Commands
+
+        private RelayCommand deleteCommand;
+        private RelayCommand loadCommand;
+        private RelayCommand saveCommand;
+        private RelayCommand newCommand;
+
+        public ICommand LoadCommand
+        {
+            get
+            {
+                if (loadCommand == null)
+                {
+                    loadCommand = new RelayCommand(
+                        param => Load(),
+                        param => CanLoad()
+                        );
+                }
+                return loadCommand;
+            }
+        }
+
+        protected abstract void Load();
+        protected abstract bool CanLoad();
+
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (saveCommand == null)
+                {
+                    saveCommand = new RelayCommand(
+                        param => SaveData(),
+                        param => CanSaveData()
+                        );
+                }
+                return saveCommand;
+            }
+        }
+
+        protected abstract void SaveData();
+        protected abstract bool CanSaveData();
+
+        public ICommand NewCommand
+        {
+            get
+            {
+                if (newCommand == null)
+                {
+                    newCommand = new RelayCommand(
+                        param => New(),
+                        param => CanNew()
+                        );
+                }
+                return newCommand;
+            }
+        }
+
+        protected abstract void New();
+        protected abstract bool CanNew();
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (deleteCommand == null)
+                {
+                    deleteCommand = new RelayCommand(
+                        param => Delete(),
+                        param => CanDelete()
+                        );
+                }
+                return deleteCommand;
+            }
+        }
+
+        protected abstract bool CanDelete();
+        protected abstract void Delete();
+
+        #endregion
     }
 }
