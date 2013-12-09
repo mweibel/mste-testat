@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoReservationBusinessComponent.cs" />
+    <Compile Include="RelationExistsException.cs" />
     <Compile Include="LocalOptimisticConcurrencyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,6 +69,10 @@
     <None Include="AutoReservationBusinessComponent.cd" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AutoReservation.Common\AutoReservation.Common.csproj">
+      <Project>{22972439-3FFF-41D2-B5AE-6C06ABC66EB4}</Project>
+      <Name>AutoReservation.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoReservation.Dal\AutoReservation.Dal.csproj">
       <Project>{AB98AC63-032F-4050-9755-1E2235E9F1DD}</Project>
       <Name>AutoReservation.Dal</Name>

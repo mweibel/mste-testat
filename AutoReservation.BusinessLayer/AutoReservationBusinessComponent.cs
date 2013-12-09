@@ -12,21 +12,21 @@ namespace AutoReservation.BusinessLayer
         #region FindAll
         public List<Auto> FindAllAutos()
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 return FindAll<Auto>(context.Autos);
             }
         }
         public List<Kunde> FindAllKunden()
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 return FindAll<Kunde>(context.Kunden);
             }
         }
         public List<Reservation> FindAllReservationen()
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 // FIXME: fugly eager loading. Better way?
                 return context.Reservationen.Include(r=>r.Auto).Include(r=>r.Kunde).ToList();
@@ -42,21 +42,21 @@ namespace AutoReservation.BusinessLayer
         #region Find
         public Auto FindAuto(int id)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 return Find<Auto>(context, context.Autos, id);
             }
         }
         public Kunde FindKunde(int id)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 return Find<Kunde>(context, context.Kunden, id);
             }
         }
         public Reservation FindReservation(int id)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 // FIXME: fugly eager loading && fugly WHERE stuff. Better way?
                 return context.Reservationen.Include(r => r.Auto)
@@ -73,21 +73,21 @@ namespace AutoReservation.BusinessLayer
         #region Update
         public Auto UpdateAuto(Auto original, Auto modified)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 return Update<Auto>(context, context.Autos, original, modified);
             }
         }
         public Kunde UpdateKunde(Kunde original, Kunde modified)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 return Update<Kunde>(context, context.Kunden, original, modified);
             }
         }
         public Reservation UpdateReservation(Reservation original, Reservation modified)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 return Update<Reservation>(context, context.Reservationen, original, modified);
             }
@@ -114,26 +114,26 @@ namespace AutoReservation.BusinessLayer
         #region Insert
         public Auto InsertAuto(Auto auto) 
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 return Insert<Auto>(context, context.Autos, auto);
             }
         }
         public Kunde InsertKunde(Kunde kunde)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 return Insert<Kunde>(context, context.Kunden, kunde);
             }
         }
         public Reservation InsertReservation(Reservation reservation)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 // FIXME: UGLY: Prevent saving car/client again
-                Auto auto = reservation.Auto;
+                var auto = reservation.Auto;
                 reservation.Auto = null;
-                Kunde kunde = reservation.Kunde;
+                var kunde = reservation.Kunde;
                 reservation.Kunde = null;
                 reservation = Insert<Reservation>(context, context.Reservationen, reservation);
                 reservation.Auto = auto;
@@ -153,21 +153,33 @@ namespace AutoReservation.BusinessLayer
         #region Delete
         public Auto DeleteAuto(Auto auto)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
+				var reservations = context.Reservationen.Where(reservation => reservation.Auto.Id == auto.Id).ToList();
+				if (reservations.Count > 0)
+				{
+					throw new RelationExistsException(auto, new List<object>(reservations));
+				}
+
                 return Delete<Auto>(context, context.Autos, auto);
             }
         }
         public Kunde DeleteKunde(Kunde kunde)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
+	            var reservations = context.Reservationen.Where(reservation => reservation.Kunde.Id == kunde.Id).ToList();
+	            if (reservations.Count > 0)
+	            {
+					throw new RelationExistsException(kunde, new List<object>(reservations));
+	            }
+
                 return Delete<Kunde>(context, context.Kunden, kunde);
             }
         }
         public Reservation DeleteReservation(Reservation reservation)
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 return Delete<Reservation>(context, context.Reservationen, reservation);
             }

@@ -26,7 +26,7 @@ namespace AutoReservation.Testing
         {
             List<AutoDto> autos = Target.FindAllAutos();
 
-            Assert.IsTrue(autos.Count == 3, "Invalid amount of autos");
+            Assert.IsTrue(autos.Count == 4, "Invalid amount of autos");
         }
 
         [TestMethod]
@@ -267,7 +267,7 @@ namespace AutoReservation.Testing
         [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteKundeTest()
         {
-            KundeDto deletedKunde = Target.DeleteKunde(Target.FindKunde(1));
+            KundeDto deletedKunde = Target.DeleteKunde(Target.FindKunde(4));
             Target.FindKunde(deletedKunde.Id);
         }
 
@@ -275,7 +275,7 @@ namespace AutoReservation.Testing
         [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteAutoTest()
         {
-            AutoDto deletedAuto = Target.DeleteAuto(Target.FindAuto(1));
+            AutoDto deletedAuto = Target.DeleteAuto(Target.FindAuto(4));
             Target.FindAuto(deletedAuto.Id);
         }
 
@@ -286,6 +286,20 @@ namespace AutoReservation.Testing
             ReservationDto deletedReservation = Target.DeleteReservation(Target.FindReservation(1));
             Target.FindReservation(deletedReservation.ReservationNr);
         }
+
+	    [TestMethod]
+		[ExpectedException(typeof(FaultException<RelationExistsException>))]
+	    public void DeleteAutoRelatedToReservation()
+	    {
+		    AutoDto deletedAuto = Target.DeleteAuto(Target.FindAuto(1));
+	    }
+
+		[TestMethod]
+		[ExpectedException(typeof(FaultException<RelationExistsException>))]
+		public void DeleteKundeRelatedToReservation()
+		{
+			KundeDto deletedKunde = Target.DeleteKunde(Target.FindKunde(1));
+		}
         #endregion Delete
     }
 }

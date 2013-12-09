@@ -5,8 +5,8 @@ using AutoReservation.Common.Interfaces.Exceptions;
 using AutoReservation.Dal;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.ServiceModel;
+using RelationExistsException = AutoReservation.Common.Interfaces.Exceptions.RelationExistsException;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -58,7 +58,15 @@ namespace AutoReservation.Service.Wcf
 
         public AutoDto DeleteAuto(AutoDto auto)
         {
-            return bc.DeleteAuto(auto.ConvertToEntity()).ConvertToDto();
+			try
+			{
+				return bc.DeleteAuto(auto.ConvertToEntity()).ConvertToDto();
+			}
+			catch (BusinessLayer.RelationExistsException e)
+			{
+				var exc = new RelationExistsException(e.ToString());
+				throw new FaultException<RelationExistsException>(exc, new FaultReason(exc.ToString()));
+			}
         }
         #endregion Autos
 
@@ -107,7 +115,15 @@ namespace AutoReservation.Service.Wcf
 
         public KundeDto DeleteKunde(KundeDto kunde)
         {
-            return bc.DeleteKunde(kunde.ConvertToEntity()).ConvertToDto();
+	        try
+	        {
+				return bc.DeleteKunde(kunde.ConvertToEntity()).ConvertToDto();
+	        }
+	        catch (BusinessLayer.RelationExistsException e)
+	        {
+		        var exc = new RelationExistsException(e.ToString());
+		        throw new FaultException<RelationExistsException>(exc, new FaultReason(exc.ToString()));
+	        }
         }
         #endregion Kunden
 

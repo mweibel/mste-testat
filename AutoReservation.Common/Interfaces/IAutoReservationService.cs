@@ -28,6 +28,7 @@ namespace AutoReservation.Common.Interfaces
         AutoDto UpdateAuto(AutoDto original, AutoDto modified);
 
         [OperationContract]
+		[FaultContract(typeof(RelationExistsException))]
         AutoDto DeleteAuto(AutoDto auto);
 
         IEnumerable<AutoDto> Autos
@@ -53,6 +54,7 @@ namespace AutoReservation.Common.Interfaces
         KundeDto UpdateKunde(KundeDto original, KundeDto modified);
 
         [OperationContract]
+		[FaultContract(typeof(RelationExistsException))]
         KundeDto DeleteKunde(KundeDto kunde);
 
         IEnumerable<KundeDto> Kunden

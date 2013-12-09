@@ -49,11 +49,12 @@ namespace AutoReservation.Testing
 
         private static void InsertAutos(SqlCommand command)
         {
-            command.CommandText =
-                "INSERT INTO Auto (Id, Marke, AutoKlasse, Tagestarif, Basistarif)" + Environment.NewLine +
-                "   SELECT 1, 'Fiat Punto', 2, 50, 0 UNION" + Environment.NewLine +
-                "   SELECT 2, 'VW Golf', 1, 120, 0 UNION" + Environment.NewLine +
-                "   SELECT 3, 'Audi S6', 0, 180, 50";
+	        command.CommandText =
+		        "INSERT INTO Auto (Id, Marke, AutoKlasse, Tagestarif, Basistarif)" + Environment.NewLine +
+		        "   SELECT 1, 'Fiat Punto', 2, 50, 0 UNION" + Environment.NewLine +
+		        "   SELECT 2, 'VW Golf', 1, 120, 0 UNION" + Environment.NewLine +
+		        "   SELECT 3, 'Audi S6', 0, 180, 50 UNION " + Environment.NewLine +
+		        "   SELECT 4, 'Ford Focus', 1, 100, 0";
 
             command.ExecuteNonQuery();
         }
