@@ -178,7 +178,9 @@ namespace AutoReservation.BusinessLayer
             try
             {
                 dbSet.Attach(entry);
-                return dbSet.Remove(entry);
+                entry = dbSet.Remove(entry);
+                context.SaveChanges();
+                return entry;
             }
             catch (DbUpdateConcurrencyException)
             {

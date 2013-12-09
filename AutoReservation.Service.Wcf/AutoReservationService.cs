@@ -29,7 +29,13 @@ namespace AutoReservation.Service.Wcf
 
         public AutoDto FindAuto(int id)
         {
-            return bc.FindAuto(id).ConvertToDto();
+            Auto auto = bc.FindAuto(id);
+            if (auto == null)
+            {
+                NotFoundException exc = new NotFoundException("Auto", id);
+                throw new FaultException<NotFoundException>(exc, new FaultReason(exc.Message));
+            }
+            return auto.ConvertToDto();
         }
 
         public AutoDto InsertAuto(AutoDto auto)
@@ -72,7 +78,13 @@ namespace AutoReservation.Service.Wcf
 
         public KundeDto FindKunde(int id)
         {
-            return bc.FindKunde(id).ConvertToDto();
+            Kunde kunde = bc.FindKunde(id);
+            if (kunde == null)
+            {
+                NotFoundException exc = new NotFoundException("Kunde", id);
+                throw new FaultException<NotFoundException>(exc, new FaultReason(exc.Message));
+            }
+            return kunde.ConvertToDto();
         }
 
         public KundeDto InsertKunde(KundeDto kunde)

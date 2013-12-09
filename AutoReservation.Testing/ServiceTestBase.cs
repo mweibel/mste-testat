@@ -57,12 +57,26 @@ namespace AutoReservation.Testing
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<NotFoundException>))]
+        public void GetAutoByIllegalNr()
+        {
+            Target.FindAuto(48539);
+        }
+
+        [TestMethod]
         public void GetKundeByIdTest()
         {
             KundeDto kunde = Target.FindKunde(1);
 
             Assert.IsTrue(kunde.Id == 1);
             Assert.IsTrue(kunde.Vorname == "Anna");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(FaultException<NotFoundException>))]
+        public void GetKundeByIllegalNr()
+        {
+            Target.FindKunde(48539);
         }
 
         [TestMethod]
@@ -78,7 +92,6 @@ namespace AutoReservation.Testing
         [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void GetReservationByIllegalNr()
         {
-            // FIXME: FaultException Expecting doesn't work
             Target.FindReservation(48539);
         }
 
@@ -148,7 +161,6 @@ namespace AutoReservation.Testing
             ReservationDto savedReservation = Target.InsertReservation(reservation);
 
             Assert.IsTrue(savedReservation.ReservationNr > 0);
-            // FIXME: Kunde / Auto are somehow not set
             Assert.AreEqual(reservation.Kunde.Id, savedReservation.Kunde.Id);
             Assert.AreEqual(reservation.Auto.Id, savedReservation.Auto.Id);
             Assert.AreEqual(reservation.Bis, savedReservation.Bis);
@@ -252,6 +264,7 @@ namespace AutoReservation.Testing
 
         #region Delete
         [TestMethod]
+        [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteKundeTest()
         {
             KundeDto deletedKunde = Target.DeleteKunde(Target.FindKunde(1));
@@ -259,6 +272,7 @@ namespace AutoReservation.Testing
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteAutoTest()
         {
             AutoDto deletedAuto = Target.DeleteAuto(Target.FindAuto(1));
@@ -266,6 +280,7 @@ namespace AutoReservation.Testing
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<NotFoundException>))]
         public void DeleteReservationTest()
         {
             ReservationDto deletedReservation = Target.DeleteReservation(Target.FindReservation(1));
