@@ -149,16 +149,16 @@ namespace AutoReservation.Ui.ViewModels
 
         private void SaveData()
         {
-            foreach (ReservationDto reservation in Reservationen)
+            foreach (ReservationDto modified in Reservationen)
             {
-				if (reservation.ReservationNr == default(int))
+				if (modified.ReservationNr == default(int))
                 {
-					Service.InsertReservation(reservation);
+					Service.InsertReservation(modified);
                 }
                 else
                 {
-					ReservationDto original = reservationOriginal.FirstOrDefault(ao => ao.ReservationNr == reservation.ReservationNr);
-                    Service.UpdateReservation(reservation, original);
+					ReservationDto original = reservationOriginal.FirstOrDefault(ao => ao.ReservationNr == modified.ReservationNr);
+                    Service.UpdateReservation(original, modified);
                 }
             }
             Load();

@@ -4,6 +4,7 @@
     xmlns:Views="clr-namespace:AutoReservation.Ui.Views"
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     Title="Auto Reservation Application"
+    Icon="/Images/appbar.transit.congestion.ico"
     Width="1024" Height="768">
     <Window.Resources>
         <Style x:Key="ValidatedButtonStyle" TargetType="Button">
