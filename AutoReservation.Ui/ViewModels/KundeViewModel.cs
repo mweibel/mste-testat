@@ -2,38 +2,40 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
-using System.Windows.Input;
+using System.Windows;
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.Interfaces.Exceptions;
 
 namespace AutoReservation.Ui.ViewModels
 {
     public class KundeViewModel : ViewModelBase
     {
-        private readonly List<KundeDto> kundenOriginal = new List<KundeDto>();
-        private ObservableCollection<KundeDto> kunden;
+        private readonly List<KundeDto> _kundenOriginal = new List<KundeDto>();
+        private ObservableCollection<KundeDto> _kunden;
         public ObservableCollection<KundeDto> Kunden
         {
             get
             {
-                if (kunden == null)
+                if (_kunden == null)
                 {
-                    kunden = new ObservableCollection<KundeDto>();
+                    _kunden = new ObservableCollection<KundeDto>();
                 }
-                return kunden;
+                return _kunden;
             }
         }
 
-        private KundeDto selectedKunde;
+        private KundeDto _selectedKunde;
         public KundeDto SelectedKunde
         {
-            get { return selectedKunde; }
+            get { return _selectedKunde; }
             set
             {
-                if (selectedKunde != value)
+                if (!Equals(_selectedKunde, value))
                 {
                     SendPropertyChanging(() => SelectedKunde);
-                    selectedKunde = value;
+                    _selectedKunde = value;
                     SendPropertyChanged(() => SelectedKunde);
                 }
             }
@@ -45,11 +47,11 @@ namespace AutoReservation.Ui.ViewModels
         protected override void Load()
         {
             Kunden.Clear();
-            kundenOriginal.Clear();
+            _kundenOriginal.Clear();
             foreach (KundeDto kunde in Service.Kunden)
             {
                 Kunden.Add(kunde);
-                kundenOriginal.Add((KundeDto)kunde.Clone());
+                _kundenOriginal.Add((KundeDto)kunde.Clone());
             }
             SelectedKunde = Kunden.FirstOrDefault();
         }
@@ -73,7 +75,7 @@ namespace AutoReservation.Ui.ViewModels
                 }
                 else
                 {
-                    KundeDto original = kundenOriginal.FirstOrDefault(ao => ao.Id == modified.Id);
+                    KundeDto original = _kundenOriginal.FirstOrDefault(ao => ao.Id == modified.Id);
                     Service.UpdateKunde(original, modified);
                 }
             }
@@ -121,7 +123,16 @@ namespace AutoReservation.Ui.ViewModels
 
         protected override void Delete()
         {
-            Service.DeleteKunde(SelectedKunde);
+			try
+			{
+				Service.DeleteKunde(SelectedKunde);
+			}
+			catch (FaultException<RelationExistsException> e)
+			{
+				MessageBox.Show(
+					"Kunde konnte nicht gelöscht werden." + Environment.NewLine + Environment.NewLine + e.Message,
+					"Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
         }
 
         protected override bool CanDelete()

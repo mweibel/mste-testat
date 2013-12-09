@@ -1,40 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using System.Windows;
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.Interfaces.Exceptions;
 
 namespace AutoReservation.Ui.ViewModels
 {
     public class AutoViewModel : ViewModelBase
     {
 
-        private readonly List<AutoDto> autosOriginal = new List<AutoDto>();
-        private ObservableCollection<AutoDto> autos;
+        private readonly List<AutoDto> _autosOriginal = new List<AutoDto>();
+        private ObservableCollection<AutoDto> _autos;
         public ObservableCollection<AutoDto> Autos
         {
             get
             {
-                if (autos == null)
+                if (_autos == null)
                 {
-                    autos = new ObservableCollection<AutoDto>();
+                    _autos = new ObservableCollection<AutoDto>();
                 }
-                return autos;
+                return _autos;
             }
         }
 
-        private AutoDto selectedAuto;
+        private AutoDto _selectedAuto;
         public AutoDto SelectedAuto
         {
-            get { return selectedAuto; }
+            get { return _selectedAuto; }
             set
             {
-                if (selectedAuto != value)
+                if (!Equals(_selectedAuto, value))
                 {
                     SendPropertyChanging(() => SelectedAuto);
-                    selectedAuto = value;
+                    _selectedAuto = value;
                     SendPropertyChanged(() => SelectedAuto);
                 }
             }
@@ -45,11 +47,11 @@ namespace AutoReservation.Ui.ViewModels
         protected override void Load()
         {
             Autos.Clear();
-            autosOriginal.Clear();
+            _autosOriginal.Clear();
             foreach (AutoDto auto in Service.Autos)
             {
                 Autos.Add(auto);
-                autosOriginal.Add((AutoDto)auto.Clone());
+                _autosOriginal.Add((AutoDto)auto.Clone());
             }
             SelectedAuto = Autos.FirstOrDefault();
         }
@@ -73,7 +75,7 @@ namespace AutoReservation.Ui.ViewModels
                 }
                 else
                 {
-                    AutoDto original = autosOriginal.FirstOrDefault(ao => ao.Id == modified.Id);
+                    AutoDto original = _autosOriginal.FirstOrDefault(ao => ao.Id == modified.Id);
                     Service.UpdateAuto(original, modified);
                 }
             }
@@ -121,7 +123,16 @@ namespace AutoReservation.Ui.ViewModels
 
         protected override void Delete()
         {
-            Service.DeleteAuto(SelectedAuto);
+	        try
+	        {
+				Service.DeleteAuto(SelectedAuto);
+	        }
+	        catch (FaultException<RelationExistsException> e)
+	        {
+		        MessageBox.Show(
+			        "Auto konnte nicht gelöscht werden." + Environment.NewLine + Environment.NewLine + e.Message,
+					"Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+	        }
         }
 
         protected override bool CanDelete()

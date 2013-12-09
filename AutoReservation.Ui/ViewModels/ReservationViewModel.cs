@@ -1,69 +1,67 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Windows.Input;
 using AutoReservation.Common.DataTransferObjects;
 
 namespace AutoReservation.Ui.ViewModels
 {
     public class ReservationViewModel : ViewModelBase
     {
-        private readonly List<ReservationDto> reservationOriginal = new List<ReservationDto>();
-        private ObservableCollection<ReservationDto> reservationen;
+        private readonly List<ReservationDto> _reservationOriginal = new List<ReservationDto>();
+        private ObservableCollection<ReservationDto> _reservationen;
         public ObservableCollection<ReservationDto> Reservationen
         {
             get
             {
-				if (reservationen == null)
+				if (_reservationen == null)
                 {
-					reservationen = new ObservableCollection<ReservationDto>();
+					_reservationen = new ObservableCollection<ReservationDto>();
                 }
-				return reservationen;
+				return _reservationen;
             }
         }
 
-		private readonly List<KundeDto> kundenOriginal = new List<KundeDto>();
-		private ObservableCollection<KundeDto> kunden;
+		private readonly List<KundeDto> _kundenOriginal = new List<KundeDto>();
+		private ObservableCollection<KundeDto> _kunden;
 		public ObservableCollection<KundeDto> Kunden
 		{
 			get
 			{
-				if (kunden == null)
+				if (_kunden == null)
 				{
-					kunden = new ObservableCollection<KundeDto>();
+					_kunden = new ObservableCollection<KundeDto>();
 				}
-				return kunden;
+				return _kunden;
 			}
 		}
 
-		private readonly List<AutoDto> autosOriginal = new List<AutoDto>();
-		private ObservableCollection<AutoDto> autos;
+		private readonly List<AutoDto> _autosOriginal = new List<AutoDto>();
+		private ObservableCollection<AutoDto> _autos;
 		public ObservableCollection<AutoDto> Autos
 		{
 			get
 			{
-				if (autos == null)
+				if (_autos == null)
 				{
-					autos = new ObservableCollection<AutoDto>();
+					_autos = new ObservableCollection<AutoDto>();
 				}
-				return autos;
+				return _autos;
 			}
 		}
 
 
 
-        private ReservationDto selectedReservation;
+        private ReservationDto _selectedReservation;
         public ReservationDto SelectedReservation
         {
-            get { return selectedReservation; }
+            get { return _selectedReservation; }
             set
             {
-                if (selectedReservation != value)
+                if (!Equals(_selectedReservation, value))
                 {
                     SendPropertyChanging(() => SelectedReservation);
-                    selectedReservation = value;
+                    _selectedReservation = value;
                     SendPropertyChanged(() => SelectedReservation);
                 }
             }
@@ -75,32 +73,32 @@ namespace AutoReservation.Ui.ViewModels
         protected override void Load()
         {
             Reservationen.Clear();
-            reservationOriginal.Clear();
+            _reservationOriginal.Clear();
             foreach (ReservationDto reservation in Service.Reservationen)
             {
                 Reservationen.Add(reservation);
-                reservationOriginal.Add((ReservationDto)reservation.Clone());
+                _reservationOriginal.Add((ReservationDto)reservation.Clone());
             }
             SelectedReservation = Reservationen.FirstOrDefault();
 
 
 			// We need the customers too, for the combobox :)
 			Kunden.Clear();
-			kundenOriginal.Clear();
+			_kundenOriginal.Clear();
 			foreach (KundeDto kunde in Service.Kunden)
 			{
 				Kunden.Add(kunde);
-				kundenOriginal.Add((KundeDto)kunde.Clone());
+				_kundenOriginal.Add((KundeDto)kunde.Clone());
 			}
 
 
 			// We need the customers too, for the combobox :)
 			Autos.Clear();
-			autosOriginal.Clear();
+			_autosOriginal.Clear();
 			foreach (AutoDto auto in Service.Autos)
 			{
 				Autos.Add(auto);
-				autosOriginal.Add((AutoDto)auto.Clone());
+				_autosOriginal.Add((AutoDto)auto.Clone());
 			}
         }
 
@@ -123,7 +121,7 @@ namespace AutoReservation.Ui.ViewModels
                 }
                 else
                 {
-					ReservationDto original = reservationOriginal.FirstOrDefault(ao => ao.ReservationNr == modified.ReservationNr);
+					ReservationDto original = _reservationOriginal.FirstOrDefault(ao => ao.ReservationNr == modified.ReservationNr);
                     Service.UpdateReservation(original, modified);
                 }
             }
