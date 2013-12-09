@@ -30,7 +30,11 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         AutoDto DeleteAuto(AutoDto auto);
 
-        IEnumerable<AutoDto> Autos { get; }
+        IEnumerable<AutoDto> Autos
+        {
+            [OperationContract]
+            get;
+        }
         #endregion Autos
 
         #region Kunden
@@ -51,7 +55,11 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         KundeDto DeleteKunde(KundeDto kunde);
 
-        IEnumerable<KundeDto> Kunden { get; }
+        IEnumerable<KundeDto> Kunden
+        {
+            [OperationContract]
+            get;
+        }
         #endregion Kunden
 
         #region Reservationen
@@ -72,7 +80,11 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         ReservationDto DeleteReservation(ReservationDto reservation);
 
-        IEnumerable<ReservationDto> Reservationen { get; }
+        IEnumerable<ReservationDto> Reservationen
+        {
+            [OperationContract]
+            get;
+        }
         #endregion Reservationen
     }
 }
