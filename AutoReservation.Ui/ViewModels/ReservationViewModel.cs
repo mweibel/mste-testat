@@ -156,7 +156,13 @@ namespace AutoReservation.Ui.ViewModels
 
         protected override void New()
         {
-            // TODO Kunden.Add(new ReservationDto { Geburtsdatum = DateTime.Today });
+            ReservationDto reservation = new ReservationDto
+            {
+                Von = DateTime.Today,
+                Bis = DateTime.Today.AddMonths(1)
+            };
+            Reservationen.Add(reservation);
+            SelectedReservation = reservation;
         }
 
         protected override bool CanNew()
