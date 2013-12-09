@@ -141,7 +141,7 @@ namespace AutoReservation.Common.DataTransferObjects
 		{
 			bool equals = false;
 
-			if(obj.GetType() == typeof(AutoDto))
+			if(obj != null && obj.GetType() == typeof(AutoDto))
 			{
 				AutoDto other = (AutoDto)obj;
 				equals = other.Id.Equals(this.Id);
