@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using AutoReservation.Common.DataTransferObjects;
 
 namespace AutoReservation.Ui.ViewModels
@@ -59,12 +60,13 @@ namespace AutoReservation.Ui.ViewModels
 			get { return _selectedReservation; }
 			set
 			{
-				if (!Equals(_selectedReservation, value))
-				{
-					SendPropertyChanging(() => SelectedReservation);
-					_selectedReservation = value;
-					SendPropertyChanged(() => SelectedReservation);
-				}
+			    if (Equals(_selectedReservation, value))
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => SelectedReservation);
+			    _selectedReservation = value;
+			    SendPropertyChanged(() => SelectedReservation);
 			}
 		}
 
@@ -72,6 +74,27 @@ namespace AutoReservation.Ui.ViewModels
 
 		protected override void Load()
 		{
+            // Load customers / cars before loading reservations, otherwise
+            // incorrect references will be around.
+
+            // We need the customers too, for the combobox :)
+            Kunden.Clear();
+            _kundenOriginal.Clear();
+            foreach (KundeDto kunde in Service.Kunden)
+            {
+                Kunden.Add(kunde);
+                _kundenOriginal.Add((KundeDto)kunde.Clone());
+            }
+
+            // We need the cars too, for the combobox :)
+            Autos.Clear();
+            _autosOriginal.Clear();
+            foreach (AutoDto auto in Service.Autos)
+            {
+                Autos.Add(auto);
+                _autosOriginal.Add((AutoDto)auto.Clone());
+            }
+
 			Reservationen.Clear();
 			_reservationOriginal.Clear();
 			foreach (ReservationDto reservation in Service.Reservationen)
@@ -82,24 +105,6 @@ namespace AutoReservation.Ui.ViewModels
 			SelectedReservation = Reservationen.FirstOrDefault();
 
 
-			// We need the customers too, for the combobox :)
-			Kunden.Clear();
-			_kundenOriginal.Clear();
-			foreach (KundeDto kunde in Service.Kunden)
-			{
-				Kunden.Add(kunde);
-				_kundenOriginal.Add((KundeDto) kunde.Clone());
-			}
-
-
-			// We need the customers too, for the combobox :)
-			Autos.Clear();
-			_autosOriginal.Clear();
-			foreach (AutoDto auto in Service.Autos)
-			{
-				Autos.Add(auto);
-				_autosOriginal.Add((AutoDto) auto.Clone());
-			}
 		}
 
 		protected override bool CanLoad()

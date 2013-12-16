@@ -65,12 +65,12 @@
 				<DataGridTextColumn Header="Kunde">
 					<DataGridTextColumn.Binding>
 						<MultiBinding StringFormat="{}{0} {1}">
-							<Binding Path="Kunde.Nachname" Mode="TwoWay" />
-							<Binding Path="Kunde.Vorname" Mode="TwoWay" />
+							<Binding Path="Kunde.Nachname" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" />
+							<Binding Path="Kunde.Vorname" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" />
 						</MultiBinding>
 					</DataGridTextColumn.Binding>
 				</DataGridTextColumn>
-				<DataGridTextColumn Header="Auto" Binding="{Binding Auto.Marke, Mode=TwoWay}" Width="*" />
+				<DataGridTextColumn Header="Auto" Binding="{Binding Auto.Marke, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
 				<DataGridTextColumn Header="Von" Binding="{Binding Von, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" />
 				<DataGridTextColumn Header="Bis" Binding="{Binding Bis, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" />
 			</DataGrid.Columns>
@@ -112,7 +112,7 @@
 			<ComboBox Grid.Column="1" Grid.Row="1" Margin="0,0,0,5"
 			          ItemsSource="{Binding Autos, Mode=OneWay}"
 			          DisplayMemberPath="Marke"
-			          SelectedItem="{Binding SelectedReservation.Auto}" />
+			          SelectedItem="{Binding SelectedReservation.Auto, Mode=TwoWay}" />
 
 			<Label Grid.Row="2" Grid.Column="0" Content="Von" />
 			<DatePicker Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" SelectedDate="{Binding SelectedReservation.Von}"
