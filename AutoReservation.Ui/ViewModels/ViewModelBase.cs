@@ -3,224 +3,222 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.Ui.Factory;
-using System.Windows;
-using AutoReservation.Service.Wcf;
 
 namespace AutoReservation.Ui.ViewModels
 {
-    public abstract class ViewModelBase : INotifyPropertyChanged, INotifyPropertyChanging
-    {
-        protected readonly IAutoReservationService Service;
+	public abstract class ViewModelBase : INotifyPropertyChanged, INotifyPropertyChanging
+	{
+		protected readonly IAutoReservationService Service;
 
-        private readonly Dispatcher dispatcher;
+		private readonly Dispatcher dispatcher;
+		private string errorText;
 
-        private PropertyChangingEventHandler propertyChangingEvent;
-        private PropertyChangedEventHandler propertyChangedEvent;
+		private PropertyChangedEventHandler propertyChangedEvent;
+		private PropertyChangingEventHandler propertyChangingEvent;
 
-        protected ViewModelBase()
-        {
-            dispatcher = Dispatcher.CurrentDispatcher;
+		protected ViewModelBase()
+		{
+			dispatcher = Dispatcher.CurrentDispatcher;
 
-            if (!IsInDesignTime)
-            {
-                Service = Creator.GetCreator().CreateInstance();
-                Load();
-            }
-        }
+			if (!IsInDesignTime)
+			{
+				Service = Creator.GetCreator().CreateInstance();
+				Load();
+			}
+		}
 
-        public event PropertyChangingEventHandler PropertyChanging
-        {
-            add { propertyChangingEvent += value; }
-            remove { propertyChangingEvent -= value; }
-        }
+		public Dispatcher Dispatcher
+		{
+			get { return dispatcher; }
+		}
 
-        public event PropertyChangedEventHandler PropertyChanged
-        {
-            add { propertyChangedEvent += value; }
-            remove { propertyChangedEvent -= value; }
-        }
+		public string ErrorText
+		{
+			get { return errorText; }
+			set
+			{
+				if (errorText != value)
+				{
+					SendPropertyChanging(() => ErrorText);
+					errorText = value;
+					SendPropertyChanged(() => ErrorText);
+				}
+			}
+		}
 
-        public Dispatcher Dispatcher { get { return dispatcher; } }
+		#region Helper Methods
 
-        protected void SendPropertyChanged<T>(Expression<Func<T>> expression)
-        {
-            var propertyName = ExtractPropertyName(expression);
-            if (propertyChangedEvent != null)
-            {
-                propertyChangedEvent(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        protected void SendPropertyChanging<T>(Expression<Func<T>> expression)
-        {
-            var propertyName = ExtractPropertyName(expression);
-            if (propertyChangingEvent != null)
-            {
-                propertyChangingEvent(this, new PropertyChangingEventArgs(propertyName));
-            }
-        }
+		private bool IsInDesignTime
+		{
+			get
+			{
+				DependencyProperty prop = DesignerProperties.IsInDesignModeProperty;
+				return (bool) DependencyPropertyDescriptor.FromProperty(prop, typeof (FrameworkElement)).Metadata.DefaultValue;
+			}
+		}
 
+		private string ExtractPropertyName<T>(Expression<Func<T>> expression)
+		{
+			if (expression == null)
+			{
+				throw new ArgumentNullException("expression");
+			}
 
-        private string errorText;
+			var memberExpression = expression.Body as MemberExpression;
+			if (memberExpression == null)
+			{
+				throw new ArgumentException("Der Ausdruck ist kein Member-Lamda-Ausdruck (MemberExpression).", "expression");
+			}
 
-        public string ErrorText
-        {
-            get
-            {
-                return errorText;
-            }
-            set
-            {
-                if (errorText != value)
-                {
-                    SendPropertyChanging(() => ErrorText);
-                    errorText = value;
-                    SendPropertyChanged(() => ErrorText);
-                }
-            }
-        }
+			var property = memberExpression.Member as PropertyInfo;
+			if (property == null)
+			{
+				throw new ArgumentException("Der Member-Ausdruck greift nicht auf eine Eigenschaft zu.", "expression");
+			}
 
-        #region Helper Methods
+			if (!property.DeclaringType.IsAssignableFrom(GetType()))
+			{
+				throw new ArgumentException("Die referenzierte Eigenschaft gehört nicht zum gewünschten Typ.", "expression");
+			}
 
-        private string ExtractPropertyName<T>(Expression<Func<T>> expression)
-        {
-            if (expression == null)
-            {
-                throw new ArgumentNullException("expression");
-            }
+			MethodInfo getMethod = property.GetGetMethod(true);
+			if (getMethod == null)
+			{
+				throw new ArgumentException("Die referenzierte Eigenschaft hat keine 'get' - Methode.", "expression");
+			}
 
-            var memberExpression = expression.Body as MemberExpression;
-            if (memberExpression == null)
-            {
-                throw new ArgumentException("Der Ausdruck ist kein Member-Lamda-Ausdruck (MemberExpression).", "expression");
-            }
+			if (getMethod.IsStatic)
+			{
+				throw new ArgumentException("Die refrenzierte Eigenschaft ist statisch.", "expression");
+			}
 
-            var property = memberExpression.Member as PropertyInfo;
-            if (property == null)
-            {
-                throw new ArgumentException("Der Member-Ausdruck greift nicht auf eine Eigenschaft zu.", "expression");
-            }
+			return memberExpression.Member.Name;
+		}
 
-            if (!property.DeclaringType.IsAssignableFrom(this.GetType()))
-            {
-                throw new ArgumentException("Die referenzierte Eigenschaft gehört nicht zum gewünschten Typ.", "expression");
-            }
+		#endregion
 
-            var getMethod = property.GetGetMethod(true);
-            if (getMethod == null)
-            {
-                throw new ArgumentException("Die referenzierte Eigenschaft hat keine 'get' - Methode.", "expression");
-            }
+		#region Commands
 
-            if (getMethod.IsStatic)
-            {
-                throw new ArgumentException("Die refrenzierte Eigenschaft ist statisch.", "expression");
-            }
+		private AsyncRelayCommand deleteCommand;
+		private RelayCommand loadCommand;
+		private RelayCommand newCommand;
+		private AsyncRelayCommand saveCommand;
 
-            return memberExpression.Member.Name;
-        }
+		public ICommand LoadCommand
+		{
+			get
+			{
+				if (loadCommand == null)
+				{
+					loadCommand = new RelayCommand(
+						param => Load(),
+						param => CanLoad()
+						);
+				}
+				return loadCommand;
+			}
+		}
 
-        private bool IsInDesignTime
-        {
-            get
-            {
-                DependencyProperty prop = DesignerProperties.IsInDesignModeProperty;
-                return (bool)DependencyPropertyDescriptor.FromProperty(prop, typeof(FrameworkElement)).Metadata.DefaultValue;
-            }
-        }
+		public ICommand SaveCommand
+		{
+			get
+			{
+				if (saveCommand == null)
+				{
+					saveCommand = new AsyncRelayCommand(
+						async param =>
+						{
+							await Task.Run(() => SaveData());
+							Load();
+						},
+						param => CanSaveData()
+						);
+				}
+				return saveCommand;
+			}
+		}
 
-        #endregion
+		public ICommand NewCommand
+		{
+			get
+			{
+				if (newCommand == null)
+				{
+					newCommand = new RelayCommand(
+						param => New(),
+						param => CanNew()
+						);
+				}
+				return newCommand;
+			}
+		}
 
-        #region Commands
+		public ICommand DeleteCommand
+		{
+			get
+			{
+				if (deleteCommand == null)
+				{
+					deleteCommand = new AsyncRelayCommand(
+						async param =>
+						{
+							await Task.Run(() => Delete());
+							Load();
+						},
+						param => CanDelete()
+						);
+				}
+				return deleteCommand;
+			}
+		}
 
-        private AsyncRelayCommand deleteCommand;
-        private RelayCommand loadCommand;
-        private AsyncRelayCommand saveCommand;
-        private RelayCommand newCommand;
+		protected abstract void Load();
+		protected abstract bool CanLoad();
 
-        public ICommand LoadCommand
-        {
-            get
-            {
-                if (loadCommand == null)
-                {
-                    loadCommand = new RelayCommand(
-                        param => Load(),
-                        param => CanLoad()
-                        );
-                }
-                return loadCommand;
-            }
-        }
+		protected abstract void SaveData();
+		protected abstract bool CanSaveData();
 
-        protected abstract void Load();
-        protected abstract bool CanLoad();
+		protected abstract void New();
+		protected abstract bool CanNew();
 
-        public ICommand SaveCommand
-        {
-            get
-            {
-                if (saveCommand == null)
-                {
-                    saveCommand = new AsyncRelayCommand(
-                        async param =>
-                        {
-                            await Task.Run(() => SaveData());
-                            Load();
-                        },
-                        param => CanSaveData()
-                   );
-                }
-                return saveCommand;
-            }
-        }
+		protected abstract bool CanDelete();
+		protected abstract void Delete();
 
-        protected abstract void SaveData();
-        protected abstract bool CanSaveData();
+		#endregion
 
-        public ICommand NewCommand
-        {
-            get
-            {
-                if (newCommand == null)
-                {
-                    newCommand = new RelayCommand(
-                        param => New(),
-                        param => CanNew()
-                        );
-                }
-                return newCommand;
-            }
-        }
+		public event PropertyChangedEventHandler PropertyChanged
+		{
+			add { propertyChangedEvent += value; }
+			remove { propertyChangedEvent -= value; }
+		}
 
-        protected abstract void New();
-        protected abstract bool CanNew();
+		public event PropertyChangingEventHandler PropertyChanging
+		{
+			add { propertyChangingEvent += value; }
+			remove { propertyChangingEvent -= value; }
+		}
 
-        public ICommand DeleteCommand
-        {
-            get
-            {
-                if (deleteCommand == null)
-                {
-                    deleteCommand = new AsyncRelayCommand(
-                        async param =>
-                        {
-                            await Task.Run(() => Delete());
-                            Load();
-                        },
-                        param => CanDelete()
-                        );
-                }
-                return deleteCommand;
-            }
-        }
+		protected void SendPropertyChanged<T>(Expression<Func<T>> expression)
+		{
+			string propertyName = ExtractPropertyName(expression);
+			if (propertyChangedEvent != null)
+			{
+				propertyChangedEvent(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
 
-        protected abstract bool CanDelete();
-        protected abstract void Delete();
-
-        #endregion
-    }
+		protected void SendPropertyChanging<T>(Expression<Func<T>> expression)
+		{
+			string propertyName = ExtractPropertyName(expression);
+			if (propertyChangingEvent != null)
+			{
+				propertyChangingEvent(this, new PropertyChangingEventArgs(propertyName));
+			}
+		}
+	}
 }

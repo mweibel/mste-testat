@@ -10,142 +10,142 @@ using AutoReservation.Common.Interfaces.Exceptions;
 
 namespace AutoReservation.Ui.ViewModels
 {
-    public class AutoViewModel : ViewModelBase
-    {
+	public class AutoViewModel : ViewModelBase
+	{
+		private readonly List<AutoDto> _autosOriginal = new List<AutoDto>();
+		private ObservableCollection<AutoDto> _autos;
 
-        private readonly List<AutoDto> _autosOriginal = new List<AutoDto>();
-        private ObservableCollection<AutoDto> _autos;
-        public ObservableCollection<AutoDto> Autos
-        {
-            get
-            {
-                if (_autos == null)
-                {
-                    _autos = new ObservableCollection<AutoDto>();
-                }
-                return _autos;
-            }
-        }
+		private AutoDto _selectedAuto;
 
-        private AutoDto _selectedAuto;
-        public AutoDto SelectedAuto
-        {
-            get { return _selectedAuto; }
-            set
-            {
-                if (!Equals(_selectedAuto, value))
-                {
-                    SendPropertyChanging(() => SelectedAuto);
-                    _selectedAuto = value;
-                    SendPropertyChanged(() => SelectedAuto);
-                }
-            }
-        }
+		public ObservableCollection<AutoDto> Autos
+		{
+			get
+			{
+				if (_autos == null)
+				{
+					_autos = new ObservableCollection<AutoDto>();
+				}
+				return _autos;
+			}
+		}
 
-        #region Load-Command
+		public AutoDto SelectedAuto
+		{
+			get { return _selectedAuto; }
+			set
+			{
+				if (!Equals(_selectedAuto, value))
+				{
+					SendPropertyChanging(() => SelectedAuto);
+					_selectedAuto = value;
+					SendPropertyChanged(() => SelectedAuto);
+				}
+			}
+		}
 
-        protected override void Load()
-        {
-            Autos.Clear();
-            _autosOriginal.Clear();
-            foreach (AutoDto auto in Service.Autos)
-            {
-                Autos.Add(auto);
-                _autosOriginal.Add((AutoDto)auto.Clone());
-            }
-            SelectedAuto = Autos.FirstOrDefault();
-        }
+		#region Load-Command
 
-        protected override bool CanLoad()
-        {
-            return Service != null;
-        }
+		protected override void Load()
+		{
+			Autos.Clear();
+			_autosOriginal.Clear();
+			foreach (AutoDto auto in Service.Autos)
+			{
+				Autos.Add(auto);
+				_autosOriginal.Add((AutoDto) auto.Clone());
+			}
+			SelectedAuto = Autos.FirstOrDefault();
+		}
 
-        #endregion
+		protected override bool CanLoad()
+		{
+			return Service != null;
+		}
 
-        #region Save-Command
+		#endregion
 
-        protected override void SaveData()
-        {
-            foreach (AutoDto modified in Autos)
-            {
-                if (modified.Id == default(int))
-                {
-                    Service.InsertAuto(modified);
-                }
-                else
-                {
-                    AutoDto original = _autosOriginal.FirstOrDefault(ao => ao.Id == modified.Id);
-                    Service.UpdateAuto(original, modified);
-                }
-            }
-        }
+		#region Save-Command
 
-        protected override bool CanSaveData()
-        {
-            if (Service == null)
-            {
-                return false;
-            }
+		protected override void SaveData()
+		{
+			foreach (AutoDto modified in Autos)
+			{
+				if (modified.Id == default(int))
+				{
+					Service.InsertAuto(modified);
+				}
+				else
+				{
+					AutoDto original = _autosOriginal.FirstOrDefault(ao => ao.Id == modified.Id);
+					Service.UpdateAuto(original, modified);
+				}
+			}
+		}
 
-            StringBuilder errorText = new StringBuilder();
-            foreach (AutoDto auto in Autos)
-            {
-                string error = auto.Validate();
-                if (!string.IsNullOrEmpty(error))
-                {
-                    errorText.AppendLine(auto.ToString());
-                    errorText.AppendLine(error);
-                }
-            }
+		protected override bool CanSaveData()
+		{
+			if (Service == null)
+			{
+				return false;
+			}
 
-            ErrorText = errorText.ToString();
-            return string.IsNullOrEmpty(ErrorText);
-        }
+			var errorText = new StringBuilder();
+			foreach (AutoDto auto in Autos)
+			{
+				string error = auto.Validate();
+				if (!string.IsNullOrEmpty(error))
+				{
+					errorText.AppendLine(auto.ToString());
+					errorText.AppendLine(error);
+				}
+			}
 
-        #endregion
+			ErrorText = errorText.ToString();
+			return string.IsNullOrEmpty(ErrorText);
+		}
 
-        #region New-Command
+		#endregion
 
-        protected override void New()
-        {
-            AutoDto auto = new AutoDto();
-            Autos.Add(auto);
-            SelectedAuto = auto;
-        }
+		#region New-Command
 
-        protected override bool CanNew()
-        {
-            return Service != null;
-        }
+		protected override void New()
+		{
+			var auto = new AutoDto();
+			Autos.Add(auto);
+			SelectedAuto = auto;
+		}
 
-        #endregion
+		protected override bool CanNew()
+		{
+			return Service != null;
+		}
 
-        #region Delete-Command
+		#endregion
 
-        protected override void Delete()
-        {
-	        try
-	        {
+		#region Delete-Command
+
+		protected override void Delete()
+		{
+			try
+			{
 				Service.DeleteAuto(SelectedAuto);
-	        }
-	        catch (FaultException<RelationExistsException> e)
-	        {
-		        MessageBox.Show(
-			        "Auto konnte nicht gelöscht werden." + Environment.NewLine + Environment.NewLine + e.Message,
+			}
+			catch (FaultException<RelationExistsException> e)
+			{
+				MessageBox.Show(
+					"Auto konnte nicht gelöscht werden." + Environment.NewLine + Environment.NewLine + e.Message,
 					"Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
-	        }
-        }
+			}
+		}
 
-        protected override bool CanDelete()
-        {
-            return
-                SelectedAuto != null &&
-                SelectedAuto.Id != default(int) &&
-                Service != null;
-        }
+		protected override bool CanDelete()
+		{
+			return
+				SelectedAuto != null &&
+				SelectedAuto.Id != default(int) &&
+				Service != null;
+		}
 
-        #endregion
-
-    }
+		#endregion
+	}
 }

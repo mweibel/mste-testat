@@ -7,24 +7,28 @@ using AutoReservation.Common.DataTransferObjects;
 
 namespace AutoReservation.Ui.ViewModels
 {
-    public class ReservationViewModel : ViewModelBase
-    {
-        private readonly List<ReservationDto> _reservationOriginal = new List<ReservationDto>();
-        private ObservableCollection<ReservationDto> _reservationen;
-        public ObservableCollection<ReservationDto> Reservationen
-        {
-            get
-            {
-				if (_reservationen == null)
-                {
-					_reservationen = new ObservableCollection<ReservationDto>();
-                }
-				return _reservationen;
-            }
-        }
-
+	public class ReservationViewModel : ViewModelBase
+	{
+		private readonly List<AutoDto> _autosOriginal = new List<AutoDto>();
 		private readonly List<KundeDto> _kundenOriginal = new List<KundeDto>();
+		private readonly List<ReservationDto> _reservationOriginal = new List<ReservationDto>();
+		private ObservableCollection<AutoDto> _autos;
 		private ObservableCollection<KundeDto> _kunden;
+		private ObservableCollection<ReservationDto> _reservationen;
+		private ReservationDto _selectedReservation;
+
+		public ObservableCollection<ReservationDto> Reservationen
+		{
+			get
+			{
+				if (_reservationen == null)
+				{
+					_reservationen = new ObservableCollection<ReservationDto>();
+				}
+				return _reservationen;
+			}
+		}
+
 		public ObservableCollection<KundeDto> Kunden
 		{
 			get
@@ -37,8 +41,6 @@ namespace AutoReservation.Ui.ViewModels
 			}
 		}
 
-		private readonly List<AutoDto> _autosOriginal = new List<AutoDto>();
-		private ObservableCollection<AutoDto> _autos;
 		public ObservableCollection<AutoDto> Autos
 		{
 			get
@@ -52,35 +54,32 @@ namespace AutoReservation.Ui.ViewModels
 		}
 
 
+		public ReservationDto SelectedReservation
+		{
+			get { return _selectedReservation; }
+			set
+			{
+				if (!Equals(_selectedReservation, value))
+				{
+					SendPropertyChanging(() => SelectedReservation);
+					_selectedReservation = value;
+					SendPropertyChanged(() => SelectedReservation);
+				}
+			}
+		}
 
-        private ReservationDto _selectedReservation;
-        public ReservationDto SelectedReservation
-        {
-            get { return _selectedReservation; }
-            set
-            {
-                if (!Equals(_selectedReservation, value))
-                {
-                    SendPropertyChanging(() => SelectedReservation);
-                    _selectedReservation = value;
-                    SendPropertyChanged(() => SelectedReservation);
-                }
-            }
-        }
+		#region Load-Command
 
-
-        #region Load-Command
-
-        protected override void Load()
-        {
-            Reservationen.Clear();
-            _reservationOriginal.Clear();
-            foreach (ReservationDto reservation in Service.Reservationen)
-            {
-                Reservationen.Add(reservation);
-                _reservationOriginal.Add((ReservationDto)reservation.Clone());
-            }
-            SelectedReservation = Reservationen.FirstOrDefault();
+		protected override void Load()
+		{
+			Reservationen.Clear();
+			_reservationOriginal.Clear();
+			foreach (ReservationDto reservation in Service.Reservationen)
+			{
+				Reservationen.Add(reservation);
+				_reservationOriginal.Add((ReservationDto) reservation.Clone());
+			}
+			SelectedReservation = Reservationen.FirstOrDefault();
 
 
 			// We need the customers too, for the combobox :)
@@ -89,7 +88,7 @@ namespace AutoReservation.Ui.ViewModels
 			foreach (KundeDto kunde in Service.Kunden)
 			{
 				Kunden.Add(kunde);
-				_kundenOriginal.Add((KundeDto)kunde.Clone());
+				_kundenOriginal.Add((KundeDto) kunde.Clone());
 			}
 
 
@@ -99,95 +98,94 @@ namespace AutoReservation.Ui.ViewModels
 			foreach (AutoDto auto in Service.Autos)
 			{
 				Autos.Add(auto);
-				_autosOriginal.Add((AutoDto)auto.Clone());
+				_autosOriginal.Add((AutoDto) auto.Clone());
 			}
-        }
+		}
 
-        protected override bool CanLoad()
-        {
-            return Service != null;
-        }
+		protected override bool CanLoad()
+		{
+			return Service != null;
+		}
 
-        #endregion
+		#endregion
 
-        #region Save-Command
+		#region Save-Command
 
-        protected override void SaveData()
-        {
-            foreach (ReservationDto modified in Reservationen)
-            {
+		protected override void SaveData()
+		{
+			foreach (ReservationDto modified in Reservationen)
+			{
 				if (modified.ReservationNr == default(int))
-                {
+				{
 					Service.InsertReservation(modified);
-                }
-                else
-                {
+				}
+				else
+				{
 					ReservationDto original = _reservationOriginal.FirstOrDefault(ao => ao.ReservationNr == modified.ReservationNr);
-                    Service.UpdateReservation(original, modified);
-                }
-            }
-        }
+					Service.UpdateReservation(original, modified);
+				}
+			}
+		}
 
-        protected override bool CanSaveData()
-        {
-            if (Service == null)
-            {
-                return false;
-            }
+		protected override bool CanSaveData()
+		{
+			if (Service == null)
+			{
+				return false;
+			}
 
-            StringBuilder errorText = new StringBuilder();
+			var errorText = new StringBuilder();
 			foreach (ReservationDto reservation in Reservationen)
-            {
-                string error = reservation.Validate();
-                if (!string.IsNullOrEmpty(error))
-                {
-                    errorText.AppendLine(reservation.ToString());
-                    errorText.AppendLine(error);
-                }
-            }
+			{
+				string error = reservation.Validate();
+				if (!string.IsNullOrEmpty(error))
+				{
+					errorText.AppendLine(reservation.ToString());
+					errorText.AppendLine(error);
+				}
+			}
 
-            ErrorText = errorText.ToString();
-            return string.IsNullOrEmpty(ErrorText);
-        }
+			ErrorText = errorText.ToString();
+			return string.IsNullOrEmpty(ErrorText);
+		}
 
+		#endregion
 
-        #endregion
+		#region New-Command
 
-        #region New-Command
+		protected override void New()
+		{
+			var reservation = new ReservationDto
+			{
+				Von = DateTime.Today,
+				Bis = DateTime.Today.AddMonths(1)
+			};
+			Reservationen.Add(reservation);
+			SelectedReservation = reservation;
+		}
 
-        protected override void New()
-        {
-            ReservationDto reservation = new ReservationDto
-            {
-                Von = DateTime.Today,
-                Bis = DateTime.Today.AddMonths(1)
-            };
-            Reservationen.Add(reservation);
-            SelectedReservation = reservation;
-        }
+		protected override bool CanNew()
+		{
+			return Service != null;
+		}
 
-        protected override bool CanNew()
-        {
-            return Service != null;
-        }
+		#endregion
 
-        #endregion
+		#region Delete-Command
 
-        #region Delete-Command
-        protected override void Delete()
-        {
-            Service.DeleteReservation(SelectedReservation);
-        }
+		protected override void Delete()
+		{
+			Service.DeleteReservation(SelectedReservation);
+		}
 
-        protected override bool CanDelete()
-        {
-            return
-                SelectedReservation != null &&
+		protected override bool CanDelete()
+		{
+			return
+				SelectedReservation != null &&
 				SelectedReservation.ReservationNr != default(int) &&
-                Service != null;
-        }
+				Service != null;
+		}
 
-        #endregion
-
-    }
+		#endregion
+	}
 }

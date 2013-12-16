@@ -2,14 +2,14 @@
 
 namespace AutoReservation.Ui.Views
 {
-    /// <summary>
-    /// Interaction logic for AutoView.xaml
-    /// </summary>
-    public partial class AutoView : UserControl
-    {
-        public AutoView()
-        {
-            InitializeComponent();
-        }
-    }
+	/// <summary>
+	///     Interaction logic for AutoView.xaml
+	/// </summary>
+	public partial class AutoView : UserControl
+	{
+		public AutoView()
+		{
+			InitializeComponent();
+		}
+	}
 }
