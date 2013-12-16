@@ -19,12 +19,13 @@ namespace AutoReservation.Common.DataTransferObjects
 			get { return _id; }
 			set
 			{
-				if (_id != value)
-				{
-					SendPropertyChanging(() => Id);
-					_id = value;
-					SendPropertyChanged(() => Id);
-				}
+			    if (_id == value)
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => Id);
+			    _id = value;
+			    SendPropertyChanged(() => Id);
 			}
 		}
 

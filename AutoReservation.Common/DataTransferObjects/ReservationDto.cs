@@ -21,12 +21,13 @@ namespace AutoReservation.Common.DataTransferObjects
 			get { return _bis; }
 			set
 			{
-				if (_bis != value)
-				{
-					SendPropertyChanging(() => Bis);
-					_bis = value;
-					SendPropertyChanged(() => Bis);
-				}
+			    if (_bis == value)
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => Bis);
+			    _bis = value;
+			    SendPropertyChanged(() => Bis);
 			}
 		}
 
@@ -36,12 +37,13 @@ namespace AutoReservation.Common.DataTransferObjects
 			get { return _von; }
 			set
 			{
-				if (_von != value)
-				{
-					SendPropertyChanging(() => Von);
-					_von = value;
-					SendPropertyChanged(() => Von);
-				}
+			    if (_von == value)
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => Von);
+			    _von = value;
+			    SendPropertyChanged(() => Von);
 			}
 		}
 
@@ -51,12 +53,13 @@ namespace AutoReservation.Common.DataTransferObjects
 			get { return _reservationNr; }
 			set
 			{
-				if (_reservationNr != value)
-				{
-					SendPropertyChanging(() => ReservationNr);
-					_reservationNr = value;
-					SendPropertyChanged(() => ReservationNr);
-				}
+			    if (_reservationNr == value)
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => ReservationNr);
+			    _reservationNr = value;
+			    SendPropertyChanged(() => ReservationNr);
 			}
 		}
 
@@ -66,12 +69,13 @@ namespace AutoReservation.Common.DataTransferObjects
 			get { return _auto; }
 			set
 			{
-				if (_auto == null || !_auto.Equals(value))
-				{
-					SendPropertyChanging(() => Auto);
-					_auto = value;
-					SendPropertyChanged(() => Auto);
-				}
+			    if (_auto != null && _auto.Equals(value))
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => Auto);
+			    _auto = value;
+			    SendPropertyChanged(() => Auto);
 			}
 		}
 
@@ -81,12 +85,13 @@ namespace AutoReservation.Common.DataTransferObjects
 			get { return _kunde; }
 			set
 			{
-				if (_kunde == null || !_kunde.Equals(value))
-				{
-					SendPropertyChanging(() => Kunde);
-					_kunde = value;
-					SendPropertyChanged(() => Kunde);
-				}
+			    if (_kunde != null && _kunde.Equals(value))
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => Kunde);
+			    _kunde = value;
+			    SendPropertyChanged(() => Kunde);
 			}
 		}
 
@@ -131,12 +136,7 @@ namespace AutoReservation.Common.DataTransferObjects
 			}
 
 
-			if (error.Length == 0)
-			{
-				return null;
-			}
-
-			return error.ToString();
+			return error.Length == 0 ? null : error.ToString();
 		}
 
 		public override object Clone()

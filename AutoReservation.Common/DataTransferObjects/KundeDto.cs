@@ -18,12 +18,13 @@ namespace AutoReservation.Common.DataTransferObjects
 			get { return _geburtsdatum; }
 			set
 			{
-				if (_geburtsdatum != value)
-				{
-					SendPropertyChanging(() => Geburtsdatum);
-					_geburtsdatum = value;
-					SendPropertyChanged(() => Geburtsdatum);
-				}
+			    if (_geburtsdatum == value)
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => Geburtsdatum);
+			    _geburtsdatum = value;
+			    SendPropertyChanged(() => Geburtsdatum);
 			}
 		}
 
@@ -33,12 +34,13 @@ namespace AutoReservation.Common.DataTransferObjects
 			get { return _id; }
 			set
 			{
-				if (_id != value)
-				{
-					SendPropertyChanging(() => Id);
-					_id = value;
-					SendPropertyChanged(() => Id);
-				}
+			    if (_id == value)
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => Id);
+			    _id = value;
+			    SendPropertyChanged(() => Id);
 			}
 		}
 
@@ -48,12 +50,13 @@ namespace AutoReservation.Common.DataTransferObjects
 			get { return _nachname; }
 			set
 			{
-				if (_nachname != value)
-				{
-					SendPropertyChanging(() => Nachname);
-					_nachname = value;
-					SendPropertyChanged(() => Nachname);
-				}
+			    if (_nachname == value)
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => Nachname);
+			    _nachname = value;
+			    SendPropertyChanged(() => Nachname);
 			}
 		}
 
@@ -63,12 +66,13 @@ namespace AutoReservation.Common.DataTransferObjects
 			get { return _vorname; }
 			set
 			{
-				if (_vorname != value)
-				{
-					SendPropertyChanging(() => Vorname);
-					_vorname = value;
-					SendPropertyChanged(() => Vorname);
-				}
+			    if (_vorname == value)
+			    {
+			        return;
+			    }
+			    SendPropertyChanging(() => Vorname);
+			    _vorname = value;
+			    SendPropertyChanged(() => Vorname);
 			}
 		}
 
