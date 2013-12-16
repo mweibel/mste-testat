@@ -17,7 +17,6 @@ namespace AutoReservation.Ui.Testing
 		{
 			TestEnvironmentHelper.InitializeTestData();
 			SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-			IAutoReservationService target = Target;
 		}
 
 		[TestMethod]
