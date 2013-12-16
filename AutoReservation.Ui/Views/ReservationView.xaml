@@ -65,18 +65,18 @@
 				<DataGridTextColumn Header="Kunde">
 					<DataGridTextColumn.Binding>
 						<MultiBinding StringFormat="{}{0} {1}">
-							<Binding Path="Kunde.Nachname" />
-							<Binding Path="Kunde.Vorname" />
+							<Binding Path="Kunde.Nachname" Mode="TwoWay" />
+							<Binding Path="Kunde.Vorname" Mode="TwoWay" />
 						</MultiBinding>
 					</DataGridTextColumn.Binding>
 				</DataGridTextColumn>
-				<DataGridTextColumn Header="Auto" Binding="{Binding Auto.Marke}" Width="*" />
+				<DataGridTextColumn Header="Auto" Binding="{Binding Auto.Marke, Mode=TwoWay}" Width="*" />
 				<DataGridTextColumn Header="Von" Binding="{Binding Von, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" />
 				<DataGridTextColumn Header="Bis" Binding="{Binding Bis, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" />
 			</DataGrid.Columns>
 		</DataGrid>
 
-		<Grid Grid.Column="3" Grid.Row="1"
+		<Grid Grid.Column="2" Grid.Row="1"
 		      Visibility="{Binding SelectedReservation, Converter={StaticResource DetailViewVisibilityConverter}, Mode=TwoWay}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="100" />
@@ -93,14 +93,14 @@
 			<Label Grid.Row="0" Content="Kunde" />
 			<ComboBox Grid.Column="1" Grid.Row="0" Margin="0,0,0,5"
 			          ItemsSource="{Binding Kunden, Mode=OneWay}"
-			          SelectedItem="{Binding SelectedReservation.Kunde}">
+			          SelectedItem="{Binding SelectedReservation.Kunde, Mode=TwoWay}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock>
 							<TextBlock.Text>
 								<MultiBinding StringFormat="{}{0} {1}">
-									<Binding Path="Nachname" />
-									<Binding Path="Vorname" />
+									<Binding Path="Nachname" Mode="TwoWay"/>
+									<Binding Path="Vorname" Mode="TwoWay" />
 								</MultiBinding>
 							</TextBlock.Text>
 						</TextBlock>
@@ -108,21 +108,21 @@
 				</ComboBox.ItemTemplate>
 			</ComboBox>
 
-			<Label Grid.Row="1" Content="Auto" />
+			<Label Grid.Row="1" Grid.Column="0" Content="Auto" />
 			<ComboBox Grid.Column="1" Grid.Row="1" Margin="0,0,0,5"
 			          ItemsSource="{Binding Autos, Mode=OneWay}"
 			          DisplayMemberPath="Marke"
 			          SelectedItem="{Binding SelectedReservation.Auto}" />
 
-			<Label Grid.Row="2" Content="Von" />
+			<Label Grid.Row="2" Grid.Column="0" Content="Von" />
 			<DatePicker Grid.Column="1" Grid.Row="2" Margin="0,0,0,5" SelectedDate="{Binding SelectedReservation.Von}"
 			            DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
 
-			<Label Grid.Row="3" Content="Bis" />
+			<Label Grid.Row="3" Grid.Column="0" Content="Bis" />
 			<DatePicker Grid.Column="1" Grid.Row="3" Margin="0,0,0,5" SelectedDate="{Binding SelectedReservation.Bis}"
 			            DisplayDateEnd="12/31/2020" DisplayDateStart="1/1/1900" />
 
-			<ScrollViewer Grid.Row="4" Grid.ColumnSpan="2" Margin="0,10,0,5" HorizontalScrollBarVisibility="Auto"
+			<ScrollViewer Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,10,0,5" HorizontalScrollBarVisibility="Auto"
 			              VerticalScrollBarVisibility="Auto">
 				<TextBlock Text="{Binding ErrorText}" Foreground="Red" />
 			</ScrollViewer>
